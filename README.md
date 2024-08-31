@@ -42,7 +42,8 @@ Before you begin, ensure you have the following installed on your machine:
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (Express or Developer edition is recommended)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/downloads/) (Community edition or higher)
 
-### Database Structure
+
+## Database Structure
 *The database structure includes the following main entities*:
 
 - **User**: Stores information about users, including their role (Admin, Staff, Customer).
