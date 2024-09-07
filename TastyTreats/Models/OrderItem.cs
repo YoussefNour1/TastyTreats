@@ -5,7 +5,7 @@ namespace TastyTreats.Models
     public class OrderItem
     {
         [Key]
-        public int OrderItemId { get; set; }
+        public int OrderItemId  { get; set; }
 
         [Required]
         public int Quantity { get; set; }
