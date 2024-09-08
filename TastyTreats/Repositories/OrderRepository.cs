@@ -15,16 +15,16 @@ namespace TastyTreats.Repositories
         public void Add( Order order)
         {
             context.Add(order);
- 
+            Save();
         }
         public void Update(Order order) { 
             context.Update(order);
         }
-        public void Delete(int id) { 
+        public void Delete(int? id) { 
             var data=GetById(id);
             context.Orders.Remove(data);
         }
-        public Order GetById(int id) {
+        public Order GetById(int? id) {
             return context.Orders.FirstOrDefault(O => O.OrderId == id);
         }
         public List<Order> GetAll() {

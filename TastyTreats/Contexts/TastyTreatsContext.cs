@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using TastyTreats.Models;
 
 namespace TastyTreats.Contexts
@@ -13,9 +14,12 @@ namespace TastyTreats.Contexts
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=LUCIFER\\MSSQLSERVER01; Database=TastyTreatsDB; Integrated Security=True; MultipleActiveResultSets=true; TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-THFIM9E\\SQL2019;Database=TastyTreats;Integrated Security = true;TrustServerCertificate=True;");
 
-
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(_configuration.GetConnectionString("TastyTreatsDB"));
+        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
