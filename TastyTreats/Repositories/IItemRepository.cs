@@ -10,6 +10,5 @@ namespace TastyTreats.Repositories
         public Item GetById(int id);
         public List<Item> GetAll();
         public void Save();
-
     }
 }
