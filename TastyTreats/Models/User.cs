@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 
@@ -11,7 +12,7 @@ namespace TastyTreats.Models
         Guest = 3
     }
 
-    public class User
+    public class User: IdentityUser
     {
         [Key]
         public int UserId { get; set; }
