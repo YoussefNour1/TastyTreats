@@ -15,8 +15,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+
 //register
 builder.Services.AddTransient<IItemRepository, ItemRepository>();
+
 
 var app = builder.Build();
 
