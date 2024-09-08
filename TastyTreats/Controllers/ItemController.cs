@@ -13,6 +13,7 @@ namespace TastyTreats.Controllers
             _itemRepository = itemRepository;
         }
         
+
         public IActionResult Index()
         {
             var items = _itemRepository.GetAll();
