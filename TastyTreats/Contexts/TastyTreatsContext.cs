@@ -18,6 +18,11 @@ namespace TastyTreats.Contexts
         {
             
         }
+
+        public TastyTreatsContext()
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()

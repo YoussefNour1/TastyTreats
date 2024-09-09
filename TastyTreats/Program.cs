@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TastyTreats.Contexts;
 using TastyTreats.Repositories.UserRepos;
+using TastyTreats.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,9 @@ builder.Services.AddRazorPages();
 //register
 builder.Services.AddTransient<IItemRepository, ItemRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<ICartRepository, CartRepository>();
+builder.Services.AddTransient<ICartItemRepository, CartItemRepository>();
+
 
 var app = builder.Build();
 
