@@ -1,0 +1,30 @@
+﻿@model List<Category>
+@{
+    Layout = "_Layout";
+}
+
+<h1 class="text-center text-danger">Category Index</h1>
+
+<a asp-action="Add" asp-controller="Category" class="btn" style="color:#CDA45E">Add new Category</a>
+
+<table class="table table-bordered p-4 mt-5">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.CategoryId</td>
+            <td>@item.Name</td>
+            <td>@item.Description</td>
+            <td>
+                <a asp-action="Edit" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn" style="color:#CDA45E">Edit</a>
+                <a asp-action="Delete" asp-controller="Category" asp-route-id="@item.CategoryId" class="btn ml-2" style="color:#CDA45E">Delete</a>
+
+            </td>
+        </tr>
+    }
+</table>

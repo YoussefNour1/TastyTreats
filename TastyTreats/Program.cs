@@ -18,7 +18,7 @@ builder.Services.AddControllersWithViews();
 
 //register
 builder.Services.AddTransient<IItemRepository, ItemRepository>();
-
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 

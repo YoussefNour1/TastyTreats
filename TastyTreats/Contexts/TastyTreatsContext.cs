@@ -52,6 +52,11 @@ namespace TastyTreats.Contexts
                 .HasMany(m => m.CartItems)
                 .WithOne(ci => ci.Item)
                 .HasForeignKey(ci => ci.ItemId);
-        }
+
+            modelBuilder.Entity<Category>()
+                .HasMany(c => c.Items)
+                .WithOne(i => i.Category)
+                .HasForeignKey(i => i.CategoryId);
+           }
     }
 }
