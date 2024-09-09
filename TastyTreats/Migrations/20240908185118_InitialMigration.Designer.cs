@@ -12,7 +12,7 @@ using TastyTreats.Contexts;
 namespace TastyTreats.Migrations
 {
     [DbContext(typeof(TastyTreatsContext))]
-    [Migration("20240831155457_InitialMigration")]
+    [Migration("20240908185118_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

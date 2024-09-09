@@ -1,22 +1,23 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TastyTreats.Models;
 
 namespace TastyTreats.Contexts
 {
-    public class TastyTreatsContext : IdentityDbContext<User>
+    public class TastyTreatsContext :DbContext
     {
-        // public DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=LUCIFER\\MSSQLSERVER01; Database=TastyTreatsDB; Integrated Security=True; MultipleActiveResultSets=true; TrustServerCertificate=True;");
-
-
+        public TastyTreatsContext(DbContextOptions<TastyTreatsContext> options) : base(options)
+        {
+            
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
@@ -24,9 +25,9 @@ namespace TastyTreats.Contexts
                 .HasConversion<string>();
 
             modelBuilder.Entity<User>()
-            .HasMany(u => u.Orders)
-            .WithOne(o => o.User)
-            .HasForeignKey(o => o.UserId);
+                .HasMany(u => u.Orders)
+                .WithOne(o => o.User)
+                .HasForeignKey(o => o.UserId);
 
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.OrderItems)
