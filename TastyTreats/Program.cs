@@ -17,6 +17,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
 builder.Services.AddRazorPages();
 
+
+//register
+builder.Services.AddTransient<IItemRepository, ItemRepository>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
