@@ -1,18 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
-
+﻿using System.ComponentModel.DataAnnotations;
 namespace TastyTreats.Models
 {
     public enum UserRole
     {
         Admin = 1,
-        User = 2,
-        Guest = 3
+        User = 2
     }
 
-    public class User: IdentityUser
+    public class User
     {
         [Key]
         public int UserId { get; set; }

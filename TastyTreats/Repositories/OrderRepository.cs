@@ -8,9 +8,9 @@ namespace TastyTreats.Repositories
          TastyTreatsContext context;
 
         //CRUD 
-        public OrderRepository()
+        public OrderRepository(TastyTreatsContext Context)
         {
-            context = new TastyTreatsContext();    
+            context = Context;    
         }
         public void Add( Order order)
         {
