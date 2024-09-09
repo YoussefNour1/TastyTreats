@@ -19,6 +19,7 @@ namespace TastyTreats.Models
 
         public int ItemId { get; set; }
         public Item Item { get; set; }
+    
     }
 
 }
