@@ -7,9 +7,9 @@ namespace TastyTreats.Repositories
     {
         TastyTreatsContext context;
 
-        public ItemRepository()
+        public ItemRepository(TastyTreatsContext _context)
         {
-            context=new TastyTreatsContext();  
+            context=_context;  
         }
 
      
@@ -36,7 +36,7 @@ namespace TastyTreats.Repositories
 
         public Item GetById(int id)
         {
-            return context.Items.FirstOrDefault(i => i.ItemId == id);
+            return  context.Items.FirstOrDefault(i => i.ItemId == id);
         }
 
         public List<Item> GetAll()

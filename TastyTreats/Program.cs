@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TastyTreats.Contexts;
+using TastyTreats.Repositories.OrderRepos;
 using TastyTreats.Repositories.UserRepos;
 using TastyTreats.Repositories;
 
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<TastyTreatsContext>(options =>
+HEADbuilder.Services.AddDbContext<TastyTreatsContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -21,11 +22,11 @@ builder.Services.AddRazorPages();
 
 //register
 builder.Services.AddTransient<IItemRepository, ItemRepository>();
+
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ICartRepository, CartRepository>();
 builder.Services.AddTransient<ICartItemRepository, CartItemRepository>();
-
-
+builder.Services.AddTransient<IOrderRepository,OrderRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,38 +1,45 @@
 ﻿using TastyTreats.Contexts;
 using TastyTreats.Models;
 
-namespace TastyTreats.Repositories
+namespace TastyTreats.Repositories.OrderRepos
 {
-    public class OrderRepository
+    public class OrderRepository:IOrderRepository
     {
-         TastyTreatsContext context;
+        TastyTreatsContext context;
 
         //CRUD 
         public OrderRepository(TastyTreatsContext Context)
         {
-            context = Context;    
+            context = Context;
         }
-        public void Add( Order order)
+
+
+
+        public void Add(Order order)
         {
             context.Add(order);
- 
+
         }
-        public void Update(Order order) { 
+        public void Update(Order order)
+        {
             context.Update(order);
         }
-        public void Delete(int id) { 
-            var data=GetById(id);
+        public void Delete(int? id)
+        {
+            var data = GetById(id);
             context.Orders.Remove(data);
         }
-        public Order GetById(int id) {
+        public Order GetById(int? id)
+        {
             return context.Orders.FirstOrDefault(O => O.OrderId == id);
         }
-        public List<Order> GetAll() {
+        public List<Order> GetAll()
+        {
             return context.Orders.ToList();
         }
         public void Save()
         {
-             context.SaveChanges();
+            context.SaveChanges();
         }
     }
 }
