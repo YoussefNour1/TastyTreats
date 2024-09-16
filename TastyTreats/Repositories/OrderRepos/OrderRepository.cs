@@ -1,4 +1,5 @@
-﻿using TastyTreats.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using TastyTreats.Contexts;
 using TastyTreats.Models;
 
 namespace TastyTreats.Repositories.OrderRepos
@@ -35,7 +36,7 @@ namespace TastyTreats.Repositories.OrderRepos
         }
         public List<Order> GetAll()
         {
-            return context.Orders.ToList();
+            return context.Orders.Include(o=>o.OrderItems).Include(u=>u.User).ToList();
         }
         public void Save()
         {

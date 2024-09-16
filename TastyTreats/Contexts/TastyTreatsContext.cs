@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TastyTreats.Contexts.DummyData;
 using TastyTreats.Models;
 
 namespace TastyTreats.Contexts
@@ -25,6 +26,8 @@ namespace TastyTreats.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<User>()
                 .Property(u => u.Role)
                 .HasConversion<string>();
@@ -63,6 +66,18 @@ namespace TastyTreats.Contexts
                 .HasMany(c => c.Items)
                 .WithOne(i => i.Category)
                 .HasForeignKey(i => i.CategoryId);
-           }
+
+            // Dummy Data 
+                //user
+            modelBuilder.Entity<User>().HasData(DummyUserContext.GetUsers().ToArray());
+            modelBuilder.Entity<Category>().HasData(DummyCategoryContext.GetCategories().ToArray());
+            modelBuilder.Entity<Item>().HasData(DummyItemContext.GetItems().ToArray());
+            modelBuilder.Entity<Cart>().HasData(DummyCartContext.GetCarts().ToArray());
+
+            modelBuilder.Entity<CartItem>().HasData(DummyCartItemContext.GetCartItems().ToArray());
+            modelBuilder.Entity<Order>().HasData(DummyOrderContext.GetOrders().ToArray());
+            modelBuilder.Entity<OrderItem>().HasData(DummyOrderItemContext.GetOrderItems().ToArray());
+
+        }
     }
 }

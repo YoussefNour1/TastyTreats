@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyTreats.Contexts;
 
@@ -11,9 +12,11 @@ using TastyTreats.Contexts;
 namespace TastyTreats.Migrations
 {
     [DbContext(typeof(TastyTreatsContext))]
-    partial class TastyTreatsContextModelSnapshot : ModelSnapshot
+    [Migration("20240916063008_AddPhoneNumberToUser")]
+    partial class AddPhoneNumberToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,20 +45,6 @@ namespace TastyTreats.Migrations
                         .IsUnique();
 
                     b.ToTable("Carts");
-
-                    b.HasData(
-                        new
-                        {
-                            CartId = 1,
-                            Quantity = 2,
-                            UserId = 1
-                        },
-                        new
-                        {
-                            CartId = 2,
-                            Quantity = 3,
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("TastyTreats.Models.CartItem", b =>
@@ -85,24 +74,6 @@ namespace TastyTreats.Migrations
                     b.HasIndex("ItemId");
 
                     b.ToTable("CartItems");
-
-                    b.HasData(
-                        new
-                        {
-                            CartItemId = 1,
-                            CartId = 1,
-                            ItemId = 1,
-                            Price = 1.99m,
-                            Quantity = 2
-                        },
-                        new
-                        {
-                            CartItemId = 2,
-                            CartId = 2,
-                            ItemId = 2,
-                            Price = 2.49m,
-                            Quantity = 1
-                        });
                 });
 
             modelBuilder.Entity("TastyTreats.Models.Category", b =>
@@ -125,20 +96,6 @@ namespace TastyTreats.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryId = 1,
-                            Description = "Various types of drinks.",
-                            Name = "Beverages"
-                        },
-                        new
-                        {
-                            CategoryId = 2,
-                            Description = "Tasty snacks and munchies.",
-                            Name = "Snacks"
-                        });
                 });
 
             modelBuilder.Entity("TastyTreats.Models.Item", b =>
@@ -179,29 +136,6 @@ namespace TastyTreats.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Items");
-
-                    b.HasData(
-                        new
-                        {
-                            ItemId = 1,
-                            Availability = true,
-                            CategoryId = 1,
-                            Description = "Refreshing cola drink.",
-                            Discount = 0.50m,
-                            ItemPicture = "coke.png",
-                            Name = "Coke",
-                            Price = 1.99m
-                        },
-                        new
-                        {
-                            ItemId = 2,
-                            Availability = true,
-                            CategoryId = 2,
-                            Description = "Crunchy potato chips.",
-                            ItemPicture = "chips.png",
-                            Name = "Chips",
-                            Price = 2.49m
-                        });
                 });
 
             modelBuilder.Entity("TastyTreats.Models.Order", b =>
@@ -233,24 +167,6 @@ namespace TastyTreats.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
-
-                    b.HasData(
-                        new
-                        {
-                            OrderId = 1,
-                            CreatedAt = new DateTime(2024, 9, 16, 10, 3, 33, 348, DateTimeKind.Local).AddTicks(9570),
-                            OrderStatus = "Completed",
-                            TotalPrice = 5.97m,
-                            UserId = 1
-                        },
-                        new
-                        {
-                            OrderId = 2,
-                            CreatedAt = new DateTime(2024, 9, 16, 10, 3, 33, 348, DateTimeKind.Local).AddTicks(9620),
-                            OrderStatus = "Pending",
-                            TotalPrice = 2.49m,
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("TastyTreats.Models.OrderItem", b =>
@@ -283,26 +199,6 @@ namespace TastyTreats.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderItems");
-
-                    b.HasData(
-                        new
-                        {
-                            OrderItemId = 1,
-                            CreatedAt = new DateTime(2024, 9, 16, 10, 3, 33, 348, DateTimeKind.Local).AddTicks(9648),
-                            ItemId = 1,
-                            OrderId = 1,
-                            Price = 1.99m,
-                            Quantity = 2
-                        },
-                        new
-                        {
-                            OrderItemId = 2,
-                            CreatedAt = new DateTime(2024, 9, 16, 10, 3, 33, 348, DateTimeKind.Local).AddTicks(9654),
-                            ItemId = 2,
-                            OrderId = 2,
-                            Price = 2.49m,
-                            Quantity = 1
-                        });
                 });
 
             modelBuilder.Entity("TastyTreats.Models.User", b =>
@@ -354,47 +250,6 @@ namespace TastyTreats.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            City = "New York",
-                            Country = "USA",
-                            Email = "john.doe@example.com",
-                            Name = "John Doe",
-                            Password = "Password@123",
-                            Phone = 1234567890,
-                            Role = "User",
-                            UserPicture = "john_picture.png",
-                            ZipCode = "12345"
-                        },
-                        new
-                        {
-                            UserId = 2,
-                            City = "London",
-                            Country = "UK",
-                            Email = "jane.smith@example.com",
-                            Name = "Jane Smith",
-                            Password = "11111111",
-                            Phone = 1098765432,
-                            Role = "Admin",
-                            UserPicture = "jane_picture.jpg",
-                            ZipCode = "54321"
-                        },
-                        new
-                        {
-                            UserId = 3,
-                            City = "Toronto",
-                            Country = "Canada",
-                            Email = "sam.wilson@example.com",
-                            Name = "Sam Wilson",
-                            Password = "SamWilson@99",
-                            Phone = 1987654321,
-                            Role = "User",
-                            UserPicture = "sam_picture.jpg",
-                            ZipCode = "67890"
-                        });
                 });
 
             modelBuilder.Entity("TastyTreats.Models.Cart", b =>
