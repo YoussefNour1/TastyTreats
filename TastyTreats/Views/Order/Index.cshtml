@@ -23,7 +23,9 @@
                 <td>@ord.TotalPrice</td>    
                 <td>@ord.CreatedAt</td>    
                 <td>@ord.OrderStatus</td>
-                <td><button class="btn btn-secondary"><i class="bi bi-eye-fill "></i>  Details</button></td>
+                <td>
+                    <a asp-controller="Order" asp-action="Details" asp-route-Id="@ord.OrderId" class="btn btn-secondary"><i class="bi bi-eye-fill "></i>  Details</a>
+                </td>
                     
             </tr>
         }

@@ -1,0 +1,60 @@
+﻿@model Order
+
+<div class="container " style="margin-top: 145px ;margin-bottom: 145px ">
+    <h2 class="mb-3">Order Details</h2>
+
+    <div class="card bg-dark text-white">
+        <div class="card-body">
+            <h4>Order #@Model.OrderId</h4>
+            <dl class="row">
+                <dt class="col-sm-3">Order Status</dt>
+                <dd class="col-sm-9">@Model.OrderStatus</dd>
+
+                <dt class="col-sm-3">Total Price</dt>
+                <dd class="col-sm-9">$@Model.TotalPrice</dd>
+
+                <dt class="col-sm-3">Order Date</dt>
+                <dd class="col-sm-9">@Model.CreatedAt.ToString("dd MMM yyyy")</dd>
+
+             
+
+                <dt class="col-sm-3">Customer Name</dt>
+                <dd class="col-sm-9">@Model.User.Name</dd> 
+            </dl>
+        </div>
+    </div>
+
+    <!-- Order Items Table -->
+    @if (Model.OrderItems != null && Model.OrderItems.Any())
+    {
+        <h4 class="mt-4">Order Items</h4>
+
+        <table class="table table-bordered table-dark table-hover ">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Item Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price (per item)</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderItems)
+                {
+                    <tr>
+                        <td>@item.Item.Name</td> <!-- Assuming Item has a 'Name' property -->
+                        <td>@item.Quantity</td>
+                        <td>$@item.Price.ToString("F2")</td>
+                        <td>$@(item.Price * item.Quantity)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No items found for this order.</p>
+    }
+
+    <a asp-action="Index" class="btn btn-primary mt-3">Back to Orders</a>
+</div>

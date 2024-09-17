@@ -32,7 +32,12 @@ namespace TastyTreats.Repositories.OrderRepos
         }
         public Order GetById(int? id)
         {
-            return context.Orders.FirstOrDefault(O => O.OrderId == id);
+  
+            return context.Orders.
+                Include(o=>o.OrderItems).
+                ThenInclude(io=>io.Item).
+                Include(u=>u.User).
+                FirstOrDefault(O => O.OrderId == id);
         }
         public List<Order> GetAll()
         {

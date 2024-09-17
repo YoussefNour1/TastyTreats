@@ -22,10 +22,15 @@ namespace TastyTreats.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public IActionResult Details()
+
+        public IActionResult Details(int id)
         {
-            return View();
+            var data= _orderRepository.GetById(id);
+            if (data == null)
+            {
+                return NotFound();
+            }
+            return View(data);
         }
         
 
