@@ -25,7 +25,7 @@ namespace TastyTreats.Controllers
 
         public IActionResult Details(int id)
         {
-            var data= _orderRepository.GetById(id);
+            var data= _orderRepository.Details(id);
             if (data == null)
             {
                 return NotFound();

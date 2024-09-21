@@ -11,6 +11,7 @@ namespace TastyTreats.Repositories.OrderRepos
         public void Delete(int? id);
 
         public Order GetById(int? id);
+        public Order Details(int? id);
 
         public List<Order> GetAll();
 
