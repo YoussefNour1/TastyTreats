@@ -11,13 +11,13 @@ namespace TastyTreats.Contexts.DummyData
                 new Cart
                 {
                     CartId = 1,
-                    Quantity = 2,
+                  
                     UserId = 1
                 },
                 new Cart
                 {
                     CartId = 2,
-                    Quantity = 3,
+
                     UserId = 2
                 }
             };

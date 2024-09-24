@@ -12,7 +12,6 @@ namespace TastyTreats.Contexts.DummyData
                 {
                     CartItemId = 1,
                     Quantity = 2,
-                    Price = 1.99m,
                     CartId = 1,
                     ItemId = 1
                 },
@@ -20,7 +19,6 @@ namespace TastyTreats.Contexts.DummyData
                 {
                     CartItemId = 2,
                     Quantity = 1,
-                    Price = 2.49m,
                     CartId = 2,
                     ItemId = 2
                 }

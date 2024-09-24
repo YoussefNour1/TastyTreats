@@ -25,7 +25,6 @@ builder.Services.AddTransient<IItemRepository, ItemRepository>();
 
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ICartRepository, CartRepository>();
-builder.Services.AddTransient<ICartItemRepository, CartItemRepository>();
 builder.Services.AddTransient<IOrderRepository,OrderRepository>();
 var app = builder.Build();
 

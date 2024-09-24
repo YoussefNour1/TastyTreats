@@ -9,9 +9,7 @@ namespace TastyTreats.Models
         [Key]
         public int CartId { get; set; }
 
-        [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Quantity must be at least 1.")] //Check that the cart quantity is positive
-        public int Quantity { get; set; }
+      
 
         // Corrected Relationship: A Cart belongs to one User
 
