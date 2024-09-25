@@ -36,7 +36,7 @@
 
 <body class="index-page" >
 
-    <header id="header" class="header fixed-top mb-5">
+    <header id="header" class="header  mb-5">
 
         <div class="topbar d-flex align-items-center">
             <div class="container d-flex justify-content-center justify-content-md-between">
@@ -70,6 +70,16 @@
                         <li><a href="#events">Events</a></li>
                         <li><a href="#chefs">Chefs</a></li>
                         <li><a href="#contact">Contact</a></li>
+
+                        <!-- Cart Icon  Should be replace UserId with the logged-in user's ID from the User.Identity-->
+                        <li>
+                            <a asp-controller="Cart" asp-action="Details" asp-route-userId="3" class="nav-icon">
+                                <i class="bi bi-cart"></i> Cart
+                            </a>
+                        </li>
+
+
+
                         <li class="dropdown">
                             <a href="#"><span>Admin</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                             <ul>
