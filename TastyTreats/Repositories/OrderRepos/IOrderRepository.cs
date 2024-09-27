@@ -4,7 +4,7 @@ namespace TastyTreats.Repositories.OrderRepos
 {
     public interface IOrderRepository
     {
-        public void Add(Order order);
+        public  Task<Order>  Add(int UserId);
 
         public void Update(Order order);
 
@@ -15,7 +15,7 @@ namespace TastyTreats.Repositories.OrderRepos
 
         public List<Order> GetAll();
 
-        public void Save();
+        public  Task  Save();
 
     }
 }

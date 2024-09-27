@@ -44,8 +44,8 @@
                     <tr>
                         <td>@item.Item.Name</td> <!-- Assuming Item has a 'Name' property -->
                         <td>@item.Quantity</td>
-                        <td>$@item.Price.ToString("F2")</td>
-                        <td>$@(item.Price * item.Quantity)</td>
+                        <td>$@item.Item.FinalPrice.ToString("F2")</td>
+                        <td>$@(item.Item.FinalPrice * item.Quantity)</td>
                     </tr>
                 }
             </tbody>

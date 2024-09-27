@@ -34,14 +34,15 @@ namespace TastyTreats.Controllers
         }
         
 
-        [HttpPost]
 
-        public IActionResult Create(Order order)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(int UserId)
         {
             if (ModelState.IsValid)
             {
-                _orderRepository.Add(order);
-                _orderRepository.Save();
+                await _orderRepository.Add(UserId);
+                 //_orderRepository.Save();
 
                 TempData["success"] = "Order Added successfully";
 

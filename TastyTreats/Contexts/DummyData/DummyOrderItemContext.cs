@@ -12,7 +12,7 @@ namespace TastyTreats.Contexts.DummyData
                 {
                     OrderItemId = 1,
                     Quantity = 2,
-                    Price = 1.99m,
+                 
                     CreatedAt = DateTime.Now,
                     OrderId = 1,
                     ItemId = 1
@@ -21,7 +21,7 @@ namespace TastyTreats.Contexts.DummyData
                 {
                     OrderItemId = 2,
                     Quantity = 1,
-                    Price = 2.49m,
+                   
                     CreatedAt = DateTime.Now,
                     OrderId = 2,
                     ItemId = 2

@@ -16,9 +16,34 @@ namespace TastyTreats.Repositories.OrderRepos
 
 
 
-        public void Add(Order order)
+        public async Task<Order>  Add(int UserId)
         {
-            context.Add(order);
+            var cart = await context.Carts
+            .Include(c => c.CartItems)
+                .ThenInclude(ci => ci.Item)
+            .FirstOrDefaultAsync(c => c.UserId == UserId);
+            if (cart == null || !cart.CartItems.Any())
+            {
+                throw new InvalidOperationException("Cart is empty or does not exist.");
+            }
+            decimal totalPrice = cart.CartItems.Sum(ci => ci.Quantity * ci.Item.FinalPrice);
+            var order = new Order
+            {
+                UserId = UserId,
+                OrderStatus = "Pending",
+                TotalPrice = totalPrice,
+                CreatedAt = DateTime.UtcNow,
+                OrderItems = cart.CartItems.Select(ci => new OrderItem
+                {
+                    ItemId = ci.ItemId,
+                    Quantity = ci.Quantity,
+                    CreatedAt = DateTime.UtcNow
+                }).ToList()
+            };
+            await context.Orders.AddAsync(order);
+            context.CartItems.RemoveRange(cart.CartItems);
+            await context.SaveChangesAsync();
+            return order;
 
         }
         public void Update(Order order)
@@ -50,9 +75,9 @@ namespace TastyTreats.Repositories.OrderRepos
         {
             return context.Orders.Include(o=>o.OrderItems).Include(u=>u.User).ToList();
         }
-        public void Save()
+        public async Task Save()
         {
-            context.SaveChanges();
+           await context.SaveChangesAsync();
         }
     }
 }
