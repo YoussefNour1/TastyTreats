@@ -12,9 +12,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<TastyTreatsContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
 builder.Services.AddRazorPages();
@@ -22,7 +20,6 @@ builder.Services.AddRazorPages();
 
 //register
 builder.Services.AddTransient<IItemRepository, ItemRepository>();
-
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ICartRepository, CartRepository>();
 builder.Services.AddTransient<IOrderRepository,OrderRepository>();
