@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TastyTreats.Contexts;
-using TastyTreats.Repositories.OrderRepos;
-using TastyTreats.Repositories.UserRepos;
 using TastyTreats.Repositories;
+using TastyTreats.Repositories.UserRepos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,10 +22,7 @@ builder.Services.AddRazorPages();
 //register
 builder.Services.AddTransient<IItemRepository, ItemRepository>();
 
-builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-builder.Services.AddTransient<ICartRepository, CartRepository>();
-builder.Services.AddTransient<ICartItemRepository, CartItemRepository>();
-builder.Services.AddTransient<IOrderRepository,OrderRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
