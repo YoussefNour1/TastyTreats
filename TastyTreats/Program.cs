@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TastyTreats.Contexts;
 using TastyTreats.Repositories;
+using TastyTreats.Repositories.OrderRepos;
 using TastyTreats.Repositories.UserRepos;
 
 var builder = WebApplication.CreateBuilder(args);
