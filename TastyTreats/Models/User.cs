@@ -37,7 +37,9 @@ namespace TastyTreats.Models
         [Required]
         [StringLength(50)]
         public string City { get; set; }
-
+        [Required]
+        [RegularExpression(@"^\d{11}$", ErrorMessage = "The phone number must be exactly 11 digits.")]
+        public int Phone { get; set; }
         // Relationships
         public UserRole Role { get; set; }
         public Cart? Cart { get; set; }

@@ -1,0 +1,122 @@
+﻿@* @model TastyTreats.Models.Cart
+
+<h2>Cart Details</h2>
+
+@if (Model == null || Model.CartItems == null || !Model.CartItems.Any())
+{
+    <div class="alert alert-warning">
+        Your cart is empty. Please add items to your cart to view them here.
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.Item.Name</td>
+                    <td>
+                        <!-- Form to update quantity of the cart item -->
+                        <form asp-action="UpdateCartItemQuantity" method="post">
+                            <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                            <input type="number" name="newQuantity" value="@item.Quantity" min="1" class="form-control" />
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </td>
+                    <td>@item.Item.FinalPrice.ToString("C")</td>
+                    <td>@(item.Item.FinalPrice * item.Quantity).ToString("C")</td>
+                    <td>
+                        <!-- Form to remove the cart item -->
+                        <form asp-action="RemoveCartItem" method="post">
+                            <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p>Total Cost: @Model.CartItems.Sum(i => i.Item.FinalPrice * i.Quantity).ToString("C")</p>
+}
+ *@
+
+
+@model TastyTreats.Models.Cart
+
+<h2>Cart Details</h2>
+
+@if (Model == null || Model.CartItems == null || !Model.CartItems.Any())
+{
+    <div class="alert alert-warning">
+        Your cart is empty. Please add items to your cart to view them here.
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.Item.Name</td>
+                    <td>
+                        <!-- Form to update quantity of the cart item -->
+                        <form asp-action="UpdateCartItemQuantity" method="post" class="update-form">
+                            <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                            <input type="number" name="newQuantity" value="@item.Quantity" min="1" class="form-control quantity-input" data-cart-item-id="@item.CartItemId" />
+                        </form>
+                    </td>
+                    <td>@item.Item.FinalPrice.ToString("C")</td>
+                    <td>@((item.Item.FinalPrice * item.Quantity).ToString("C"))</td>
+
+
+                    <td>
+                        <!-- Form to remove the cart item -->
+                        <form asp-action="RemoveCartItem" method="post">
+                            <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p><strong>Total Cost:</strong> @Model.CartItems.Sum(i => i.Item.FinalPrice * i.Quantity).ToString("C")</p>
+
+    <!-- Confirm Order button styled as a 'Subscribe' button -->
+    <form asp-action="Create" asp-controller="Order" method="post">
+        <input type="hidden" name="UserId" value="@Model.UserId" />
+        <button type="submit" class="btn btn-primary btn-lg" style="background-color: #28a745; border-color: #28a745;">
+            <i class="fas fa-check-circle"></i> Confirm Order
+        </button>
+    </form>
+}
+
+<script>
+    document.querySelectorAll('.quantity-input').forEach(input => {
+        input.addEventListener('change', function () {
+            this.closest('form').submit(); // Submit the form when the quantity changes
+        });
+    });
+</script>

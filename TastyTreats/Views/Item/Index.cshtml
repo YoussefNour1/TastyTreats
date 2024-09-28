@@ -1,0 +1,54 @@
+﻿@model List<Item>
+
+@{
+    ViewBag.Title = "Items";
+}
+
+<h2>Items</h2>
+
+<p>
+    @Html.ActionLink("Add New Item", "Add", "Item", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Picture</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Final Price</th>
+            <th>Category</th>
+            <th>Available</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ItemPicture))
+                    {
+                        <img src="@item.ItemPicture" alt="@item.Name" width="50" height="50" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+                </td>
+                <td>@item.Name</td>
+                <td>@item.Price.ToString("C")</td>
+                <td>@item.Discount?.ToString("C")</td>
+                <td>@item.FinalPrice.ToString("C")</td>
+                <td>@item.Category?.Name</td>
+                <td>@(item.Availability ? "Yes" : "No")</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.ItemId }, new { @class = "btn btn-info" }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }, new { @class = "btn btn-warning" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ItemId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

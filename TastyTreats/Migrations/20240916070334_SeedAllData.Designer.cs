@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyTreats.Contexts;
 
@@ -11,9 +12,11 @@ using TastyTreats.Contexts;
 namespace TastyTreats.Migrations
 {
     [DbContext(typeof(TastyTreatsContext))]
-    partial class TastyTreatsContextModelSnapshot : ModelSnapshot
+    [Migration("20240916070334_SeedAllData")]
+    partial class SeedAllData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,6 +33,9 @@ namespace TastyTreats.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -44,11 +50,13 @@ namespace TastyTreats.Migrations
                         new
                         {
                             CartId = 1,
+                            Quantity = 2,
                             UserId = 1
                         },
                         new
                         {
                             CartId = 2,
+                            Quantity = 3,
                             UserId = 2
                         });
                 });
@@ -67,6 +75,9 @@ namespace TastyTreats.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -84,6 +95,7 @@ namespace TastyTreats.Migrations
                             CartItemId = 1,
                             CartId = 1,
                             ItemId = 1,
+                            Price = 1.99m,
                             Quantity = 2
                         },
                         new
@@ -91,6 +103,7 @@ namespace TastyTreats.Migrations
                             CartItemId = 2,
                             CartId = 2,
                             ItemId = 2,
+                            Price = 2.49m,
                             Quantity = 1
                         });
                 });
@@ -228,7 +241,7 @@ namespace TastyTreats.Migrations
                         new
                         {
                             OrderId = 1,
-                            CreatedAt = new DateTime(2024, 9, 27, 1, 30, 10, 877, DateTimeKind.Local).AddTicks(5659),
+                            CreatedAt = new DateTime(2024, 9, 16, 10, 3, 33, 348, DateTimeKind.Local).AddTicks(9570),
                             OrderStatus = "Completed",
                             TotalPrice = 5.97m,
                             UserId = 1
@@ -236,7 +249,7 @@ namespace TastyTreats.Migrations
                         new
                         {
                             OrderId = 2,
-                            CreatedAt = new DateTime(2024, 9, 27, 1, 30, 10, 877, DateTimeKind.Local).AddTicks(5732),
+                            CreatedAt = new DateTime(2024, 9, 16, 10, 3, 33, 348, DateTimeKind.Local).AddTicks(9620),
                             OrderStatus = "Pending",
                             TotalPrice = 2.49m,
                             UserId = 2
@@ -260,6 +273,9 @@ namespace TastyTreats.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -275,17 +291,19 @@ namespace TastyTreats.Migrations
                         new
                         {
                             OrderItemId = 1,
-                            CreatedAt = new DateTime(2024, 9, 27, 1, 30, 10, 877, DateTimeKind.Local).AddTicks(5777),
+                            CreatedAt = new DateTime(2024, 9, 16, 10, 3, 33, 348, DateTimeKind.Local).AddTicks(9648),
                             ItemId = 1,
                             OrderId = 1,
+                            Price = 1.99m,
                             Quantity = 2
                         },
                         new
                         {
                             OrderItemId = 2,
-                            CreatedAt = new DateTime(2024, 9, 27, 1, 30, 10, 877, DateTimeKind.Local).AddTicks(5786),
+                            CreatedAt = new DateTime(2024, 9, 16, 10, 3, 33, 348, DateTimeKind.Local).AddTicks(9654),
                             ItemId = 2,
                             OrderId = 2,
+                            Price = 2.49m,
                             Quantity = 1
                         });
                 });

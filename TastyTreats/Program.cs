@@ -22,7 +22,9 @@ builder.Services.AddRazorPages();
 //register
 builder.Services.AddTransient<IItemRepository, ItemRepository>();
 
-
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<ICartRepository, CartRepository>();
+builder.Services.AddTransient<IOrderRepository,OrderRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

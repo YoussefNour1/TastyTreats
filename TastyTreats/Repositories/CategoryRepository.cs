@@ -7,9 +7,9 @@ namespace TastyTreats.Repositories
     {
         
         TastyTreatsContext context;
-        public CategoryRepository()
+        public CategoryRepository(TastyTreatsContext Context)
         {
-            context = new TastyTreatsContext();
+            context = Context;
         }
         public void Add(Category category)
         {

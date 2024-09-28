@@ -1,0 +1,105 @@
+﻿
+@model Item
+
+@{
+    ViewBag.Title = "Item Details";
+}
+
+<div class="container mt-4">
+    <div class="row">
+
+        <div class="col-md-12">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+            }
+        </div>
+
+        <div class="col-md-5">
+            @if (!string.IsNullOrEmpty(Model.ItemPicture))
+            {
+                <img src="@Model.ItemPicture" alt="@Model.Name" class="img-fluid" />
+            }
+            else
+            {
+                <span>No Image</span>
+            }
+        </div>
+
+        <div class="col-md-7">
+            <h2>@Model.Name</h2>
+
+            <!-- Rating  -->
+            <div class="mb-2">
+                <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+            </div>
+
+            @if (Model.Discount.HasValue && Model.Discount > 0)
+            {
+                <p class="text-danger"><del>@Model.Price.ToString("C")</del></p>
+            }
+            <p class="text-success"><strong>@Model.FinalPrice.ToString("C")</strong></p>
+
+            <p>@Model.Description</p>
+
+            <p>
+                @if (Model.Availability)
+                {
+                    <span class="text-success">In Stock</span>
+                }
+                else
+                {
+                    <span class="text-danger">Out of Stock</span>
+                }
+            </p>
+
+            <!-- Quantity and Add to Cart -->
+            <form asp-action="CreateAndAddCartItem" asp-controller="Cart" method="post">
+                <input type="hidden" name="itemId" value="@Model.ItemId" />
+                <input type="hidden" name="userId" value="3" />
+
+                <div class="input-group mb-3" style="max-width: 200px;">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-primary" type="button" id="btn-minus">-</button>
+                    </div>
+                    <input type="number" name="quantity" class="form-control text-center" value="1" min="1" id="quantity-input" />
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="button" id="btn-plus">+</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-shopping-cart"></i> Add To Cart
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Back to Items", "Index", null, new { @class = "btn btn-secondary mt-3" })
+</p>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var minusButton = document.getElementById('btn-minus');
+        var plusButton = document.getElementById('btn-plus');
+        var quantityInput = document.getElementById('quantity-input');
+
+        minusButton.addEventListener('click', function () {
+            var currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+            }
+        });
+
+        plusButton.addEventListener('click', function () {
+            var currentValue = parseInt(quantityInput.value);
+            quantityInput.value = currentValue + 1;
+        });
+    });
+</script>

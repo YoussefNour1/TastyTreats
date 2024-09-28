@@ -11,6 +11,7 @@
     <!-- Favicons -->
     <link href="~/img/favicon.png" rel="icon">
     <link href="~/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -25,13 +26,17 @@
     <link href="~/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="~/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+
     <!-- Main CSS File -->
     <link href="~/css/main.css" rel="stylesheet">
 </head>
 
 <body class="index-page" >
 
-    <header id="header" class="header fixed-top">
+    <header id="header" class="header  mb-5">
 
         <div class="topbar d-flex align-items-center">
             <div class="container d-flex justify-content-center justify-content-md-between">
@@ -61,10 +66,20 @@
                         <li><a asp-controller="Home" asp-action="Index" class="active">Home<br></a></li>
                         <li><a href="#about">About</a></li>
                         <li><a asp-controller="Menu" asp-action="Index">Menu</a></li>
-                        <li><a href="#specials">Specials</a></li>
+                        <li><a asp-controller="order" asp-action="index">Orders</a></li>
                         <li><a href="#events">Events</a></li>
                         <li><a href="#chefs">Chefs</a></li>
                         <li><a href="#contact">Contact</a></li>
+
+                        <!-- Cart Icon  Should be replace UserId with the logged-in user's ID from the User.Identity-->
+                        <li>
+                            <a asp-controller="Cart" asp-action="Details" asp-route-userId="3" class="nav-icon">
+                                <i class="bi bi-cart"></i> Cart
+                            </a>
+                        </li>
+
+
+
                         <li class="dropdown">
                             <a href="#"><span>Admin</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                             <ul>
@@ -105,7 +120,7 @@
     </header>
 
 
-    <main role="main" class="main">
+    <main role="main" class="main mt-5 pt-5 ">
         @RenderBody()
     </main>
 
@@ -191,6 +206,24 @@
     <script src="~/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="~/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="~/js/main.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!--For Toast (Cart)-->
+    <script>
+        $(document).ready(function () {
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>toastr.success('@TempData["SuccessMessage"]'); </text>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>toastr.error('@TempData["ErrorMessage"]'); </text>
+        }
+            });
+    </script>
 
 
 </body>

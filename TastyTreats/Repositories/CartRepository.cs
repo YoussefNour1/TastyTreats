@@ -4,62 +4,112 @@ using TastyTreats.Contexts;
 using TastyTreats.Models;
 
 namespace TastyTreats.Repositories
-{   
+{
     //CRUD Operations for Cart
 
-    public class CartRepository : ICartRepository
+    public class CartRepository :ICartRepository
     {
         //Make Context
 
-        TastyTreatsContext context;
+        private readonly TastyTreatsContext _context;
 
-        public CartRepository()
+        public CartRepository(TastyTreatsContext context)
         {
-            context = new TastyTreatsContext();
+            _context = context;
         }
 
-        //This function create new Cart 
-        public void CreateCart(Cart cart)
+
+        // Create a new cart for a user
+       private async Task<Cart?> CreateCart(int userId)
         {
-            context.Carts.Add(cart);
-           
+            //Create new cart for user
+            var cart = new Cart
+            {
+                UserId = userId,
+                CartItems = new List<CartItem>()
+            };
+             await _context.AddAsync(cart);
+             await _context.SaveChangesAsync();
+            return cart;
         }
 
-        //This function delete an existance Cart
-        public void DeleteCart(int cartId)
+        //This method to add cartitem to cart
+        public async Task<CartItem?> AddCartItem( int userId, CartItem cartItem)
         {
-            var cart = GetCartById(cartId);
+            // Get cart of this user
+            var cart = await _context.Carts.FirstOrDefaultAsync(c=> c.UserId == userId);
+
+            if (cart == null)
+            {   //If user has not cart 
+                cart = await CreateCart(userId);
+            }
+
             if (cart != null)
             {
-                context.Carts.Remove(cart);
+                var cartitemexist = await _context.CartItems.FirstOrDefaultAsync(i => i.ItemId == cartItem.ItemId && i.CartId==cart.CartId);
+                if (cartitemexist == null)
+                {
+                    cartItem.CartId = cart.CartId;
+                   
+
+                    // Add the new item to the cart's CartItems collection
+                    await _context.AddAsync(cartItem);
+
+                    // Save changes to the database
+                    await _context.SaveChangesAsync();
+
+                    return (cartItem);
+                }
+
+                cartitemexist.Quantity += cartItem.Quantity;
+
+               // Save changes to the database
+               await _context.SaveChangesAsync();
+
+                return (cartItem);
             }
-           
+            return (null);
         }
 
-        // This function retrieves all Carts and feteches the items in the Carts
+       
+    
 
-        public List<Cart> GetAllCarts()
+    // Get cart by ID and User ID to ensure ownership
+    public async Task<Cart?> GetCartByUserId(int userId)
         {
-            return context.Carts.Include(c => c.CartItems).ToList();
+            return await _context.Carts.
+                Include(c => c.CartItems).
+                ThenInclude(ci => ci.Item).
+                FirstOrDefaultAsync(c=> c.UserId == userId);
         }
 
-        //This function retrieves a specific Cart based on its cartId and also includes the CartItems that belongs to this Cart
-        public Cart GetCartById(int cartId)
-        {
-            return context.Carts.Include(c => c.CartItems).FirstOrDefault(c => c.CartId == cartId);
+        //This method to get the cartId from the CartItem
+         
 
+        // Remove item from cart
+        public async Task<CartItem?> RemoveCartItem(int cartItemId)
+        {   
+            //Get cartItem from database
+            var cartItem =await _context.CartItems.Include(c=> c.Cart).FirstOrDefaultAsync(ci => ci.CartItemId == cartItemId);
+            if (cartItem != null)
+            {
+                _context.CartItems.Remove(cartItem);
+               await _context.SaveChangesAsync();
+            }
+            return (cartItem);
         }
 
-        //This function Updates on an existance Cart
-        public void UpdateCart(Cart cart)
+        // Update quantity of a cart item
+        public async Task<CartItem?> UpdateCartItemQuantity(int cartItemId, int newQuantity)
         {
-            context.Carts.Update(cart);
-        }
+            var cartItem = await _context.CartItems.Include(c => c.Cart).FirstOrDefaultAsync(ci => ci.CartItemId == cartItemId);
+            if (cartItem != null)
+            {
+                cartItem.Quantity = newQuantity;
+                await _context.SaveChangesAsync();
+            }
 
-        //This function save changes in the database
-        public void Save()
-        {
-            context.SaveChanges();
+            return (cartItem);
         }
     }
 }

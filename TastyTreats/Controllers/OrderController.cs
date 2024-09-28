@@ -23,14 +23,26 @@ namespace TastyTreats.Controllers
             return View();
         }
 
-        [HttpPost]
+        public IActionResult Details(int id)
+        {
+            var data= _orderRepository.Details(id);
+            if (data == null)
+            {
+                return NotFound();
+            }
+            return View(data);
+        }
+        
 
-        public IActionResult Create(Order order)
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(int UserId)
         {
             if (ModelState.IsValid)
             {
-                _orderRepository.Add(order);
-                _orderRepository.Save();
+                await _orderRepository.Add(UserId);
+                 //_orderRepository.Save();
 
                 TempData["success"] = "Order Added successfully";
 
