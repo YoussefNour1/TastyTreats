@@ -87,7 +87,7 @@ namespace TastyTreats.Controllers
             return View(user);
         }
 
-        [HttpGet("edit")]
+        [HttpGet("edit/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);

@@ -6,72 +6,69 @@
 
 <section style="margin-top:77px; padding:30px">
 
-    <h1>View</h1>
+    <h1>User Details</h1>
+    <hr />
+    <div>
+        <div>
+            @if (Model == null)
+            {
+                <div>
+                    <center>
+                        <h4>There is no User found</h4>
+                    </center>
+                </div>
+            }
+            else
+            {
+                <div style="display: flex; align-items: center;">
+                    <!-- Image Container -->
+                    <div style="margin-right: 20px;">
+                        <div style="border-radius:20px; width:250px; height:250px; border: 2px solid black; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                            @if (Model.UserPicture == null)
+                            {
+                                <img src="~/imag/default.jpg" style="width: 100%; height: 100%; object-fit: cover;" />
+                            }
+                            else
+                            {
+                                <img src="@Model.UserPicture" style="width: 100%; height: 100%; object-fit: cover;" />
+                            }
+                        </div>
+                    </div>
 
-    <div>
-        <h4>User</h4>
-        <hr />
-        @if (Model != null)
-        {
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Password)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Password)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Email)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Email)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.UserPicture)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.UserPicture)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.ZipCode)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.ZipCode)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Country)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Country)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.City)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.City)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Role)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Role)
-                </dd>
-            </dl>
-        }
-        else
-        {
-            <center>
-                <h2>Sorry, we can't find this user</h2>
-            </center>
-        }
+                    <!-- Text Content Container -->
+                    <dl>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(Model => Model.Name)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Email)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.City)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.City)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Country)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Country)
+                        </dd>
+                    </dl>
+                </div>
+
+                
+            }
+        </div>
     </div>
-    <div>
+    <div class="mt-4 ms-1">
         <a asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
         <a asp-action="Index">Back to List</a>
     </div>

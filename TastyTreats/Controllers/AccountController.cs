@@ -6,7 +6,9 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using System.Net;
 using TastyTreats.Models;
 using TastyTreats.Repositories.UserRepos;
+
 using TastyTreats.ViewModel;
+
 
 namespace TastyTreats.Controllers
 {
@@ -78,6 +80,7 @@ namespace TastyTreats.Controllers
             return View();
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
@@ -123,10 +126,6 @@ namespace TastyTreats.Controllers
             await _signInManager.SignOutAsync();
             return View(nameof(Login));
         }
-
-
-
-
 
     }
 }
