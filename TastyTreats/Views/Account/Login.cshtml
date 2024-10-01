@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TastyTreats.ViewModel.LoginViewModel
+@{
     ViewData["Title"] = "Login";
     Layout = "_AuthLayout";
 }
@@ -7,19 +8,32 @@
         <div class="form-content"> 
             <header class="header">Login</header>
             <form method="post" asp-action="Login">
+
+                <div asp-validation-summary="All" class="text-white"></div>
+
                 <div class="field input-field">
-                    <input type="email" placeholder="Email" class="input">
+                    <input asp-for="UserName" placeholder="UserName" class="input">
+                    <span asp-validation-for="UserName" class="text-white"></span>
                 </div>
+
                 <div class="field input-field">
-                    <input type="password" placeholder="Password" class="password">
+                    <input asp-for="Email" placeholder="Email" class="input">
+                    <span asp-validation-for="Email" class="text-white"></span>
+                </div>
+
+                <div class="field input-field">
+                    <input asp-for="Password" placeholder="Password" class="password">
+                    <span asp-validation-for="Password" class="text-white"></span>
                     <i class='bx bx-hide eye-icon'></i>
                 </div>
+
                 <div class="form-link">
                     <a href="#" class="forgot-pass">Forgot password?</a>
                 </div>
                 <div class="field button-field">
                     <button>Login</button>
                 </div>
+
             </form>
             <div class="form-link">
                 <span>Don't have an account? <a asp-action="Register" class="link signup-link">Signup</a></span>
@@ -41,3 +55,11 @@
         </div>
     </div>
 </section>
+
+
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

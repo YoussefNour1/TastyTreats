@@ -1,4 +1,4 @@
-﻿@model TastyTreats.Models.User
+﻿@model TastyTreats.ViewModel.RegisterViewModel
 
 @{
     ViewData["Title"] = "Register";
@@ -7,27 +7,46 @@
 
 <section class="container forms">
     <div class="form signup">
-        <div class="form-content">
-            <header>Signup</header>
-            <form asp-action="Register">
-                <div class="field input-field">
-                    <input type="email" placeholder="Email" class="input">
+        <div class="form-content bg-dark p-4 rounded">
+            <header class="text-light">Sign up</header>
+            <form asp-action="Register" asp-controller="Account" method="post">
+
+                <div asp-validation-summary="All" class="text-white"></div>
+
+                <div class="field input-field mb-3">
+                    <input asp-for="UserName" placeholder="UserName" class="form-control bg-dark text-light" />
+                    <span asp-validation-for="UserName" class="text-white"></span>
                 </div>
-                <div class="field input-field">
-                    <input type="password" placeholder="Create password" class="password">
+
+                <div class="field input-field mb-3">
+                    <input asp-for="Email" placeholder="Email" class="form-control bg-dark text-light" />
+                    <span asp-validation-for="Email" class="text-white"></span>
                 </div>
-                <div class="field input-field">
-                    <input type="password" placeholder="Confirm password" class="password">
-                    <i class='bx bx-hide eye-icon'></i>
+
+                <div class="field input-field mb-3">
+                    <input asp-for="Address" placeholder="Address" class="form-control bg-dark text-light" />
+                    <span asp-validation-for="Address" class="text-white"></span>
                 </div>
-                <div class="field button-field">
-                    <button>Signup</button>
+
+                <div class="field input-field mb-3">
+                    <input asp-for="Password" type="password" placeholder="Create password" class="form-control bg-dark text-light" />
+                    <span asp-validation-for="Password" class="text-white"></span>
                 </div>
+
+                <div class="field input-field mb-3">
+                    <input asp-for="ConfirmPassword" type="password" placeholder="Confirm password" class="form-control bg-dark text-light" />
+                    <span asp-validation-for="ConfirmPassword" class="text-white"></span>
+                </div>
+
+                <div class="field button-field mb-3">
+                    <button type="submit" class="btn btn-primary">Sign up</button>
+                </div>
+
             </form>
-            <div class="form-link">
-                <span>Already have an account? <a href="#" class="link login-link">Login</a></span>
-            </div>
-        </div>
+
+            <div class="form-link text-light">
+                <span>Already have an account? <a asp-controller="Account" asp-action="Login" class="link login-link">Login</a></span>
+         
         <div class="line"></div>
         <div class="media-options">
             <a href="#" class="field facebook">
@@ -41,5 +60,13 @@
                 <span>Login with Google</span>
             </a>
         </div>
-    </div>
+    </div>   
+  </div>
+  </div>
 </section>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

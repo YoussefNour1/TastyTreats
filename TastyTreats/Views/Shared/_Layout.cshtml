@@ -111,7 +111,24 @@
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
                 </nav>
 
-                <a class="btn-login d-none d-xl-block" asp-controller="Account" asp-action="Login">Login</a>
+                @*
+                    To Show SignOut only and User Name if User Is made Login
+                    and Show SignUp and LogIn if User made LogOut
+                *@
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="btn-login d-none d-xl-block" asp-controller="Account" asp-action="LogOut">LogOut</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">Welcome @User.Identity.Name</a>
+                
+                }
+                else
+                {
+                   <a class="btn-login d-none d-xl-block" asp-controller="Account" asp-action="Register">Sign Up</a>
+                   <a class="btn-login d-none d-xl-block" asp-controller="Account" asp-action="Login">Login</a>
+                   
+                }
+                
 
             </div>
 

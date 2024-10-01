@@ -6,7 +6,7 @@ using TastyTreats.Models;
 
 namespace TastyTreats.Contexts
 {
-    public class TastyTreatsContext :DbContext
+    public class TastyTreatsContext :IdentityDbContext<ApplicationUser>
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
