@@ -7,7 +7,11 @@ using TastyTreats.ViewModel;
 
 namespace TastyTreats.Contexts
 {
+
     public class TastyTreatsContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
+
+    public class TastyTreatsContext :IdentityDbContext<ApplicationUser>
+
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
