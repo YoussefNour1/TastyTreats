@@ -1,9 +1,9 @@
 ﻿
 using Microsoft.Extensions.Options;
-using System.Net.Mail;
-using System.Net;
 using TastyTreats.Models;
-
+using MimeKit;
+using MailKit.Security;
+using MailKit.Net.Smtp;
 namespace TastyTreats.Repositories
 {
     public class EmailSenderRepository : IEmailSenderRepository
@@ -16,27 +16,50 @@ namespace TastyTreats.Repositories
             _emailSettings = emailSettings.Value;
         }
 
+      
         public async Task SendEmailAsync(string toEmail, string subject, string message)
         {
-            var smtpClient = new SmtpClient(_emailSettings.SmtpServer)
+            var emailMessage = new MimeMessage
             {
-                Port = _emailSettings.SmtpPort,
-                Credentials = new NetworkCredential(_emailSettings.SenderEmail, _emailSettings.SenderPassword),
-                EnableSsl = true,
+                Sender = MailboxAddress.Parse(_emailSettings.SenderEmail),
+                Subject = subject
             };
+            emailMessage.To.Add(MailboxAddress.Parse(toEmail));
+            emailMessage.From.Add(new MailboxAddress(_emailSettings.SenderName, _emailSettings.SenderEmail));
 
-            var mailMessage = new MailMessage
+
+            var builder = new BodyBuilder
             {
-                From = new MailAddress(_emailSettings.SenderEmail, _emailSettings.SenderName),
-                Subject = subject,
-                Body = message,
-                IsBodyHtml = true,
+                HtmlBody = message
             };
+            emailMessage.Body = builder.ToMessageBody();
 
-            mailMessage.To.Add(toEmail);
+            // Send the email
+            try
+            {
+                using var smtp = new SmtpClient();
+                // Connect to the SMTP server
+                await smtp.ConnectAsync(_emailSettings.SmtpServer, _emailSettings.SmtpPort, SecureSocketOptions.StartTls);
 
-            await smtpClient.SendMailAsync(mailMessage);
+                // Authenticate
+                await smtp.AuthenticateAsync(_emailSettings.SenderEmail, _emailSettings.SenderPassword);
+
+                // Send the email
+                await smtp.SendAsync(emailMessage);
+
+                // Disconnect
+                await smtp.DisconnectAsync(true);
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception as needed
+                throw new InvalidOperationException("Failed to send email.", ex);
+            }
         }
+
     }
+
+
+
     
 }
