@@ -1,11 +1,14 @@
-﻿@model TastyTreats.ViewModel.LoginViewModel
+﻿
+
+
+@model TastyTreats.ViewModel.LoginViewModel
 @{
     ViewData["Title"] = "Login";
     Layout = "_AuthLayout";
 }
 <section class="container forms">
     <div class="form login">
-        <div class="form-content"> 
+        <div class="form-content">
             <header class="header">Login</header>
             <form method="post" asp-action="Login">
 
@@ -28,37 +31,78 @@
                 </div>
 
                 <div class="form-link">
-                    <a href="#" class="forgot-pass">Forgot password?</a>
+                    <a asp-action="ForgotPassword" asp-controller="Account" class="forgot-pass">Forgot password?</a>
                 </div>
                 <div class="field button-field">
-                    <button>Login</button>
+                    <button type="submit" class="btn btn-primary">Login</button>
                 </div>
-
             </form>
+
             <div class="form-link">
                 <span>Don't have an account? <a asp-action="Register" class="link signup-link">Signup</a></span>
             </div>
         </div>
+
         <div class="line"></div>
+
+        <!-- Facebook login -->
         <div class="media-options">
             <a href="#" class="field facebook">
                 <i class='bx bxl-facebook facebook-icon'></i>
                 <span>Login with Facebook</span>
             </a>
         </div>
+
+        <!-- Google login -->
         <div class="media-options">
-            <a href="#" class="field google">
-                @* <img src="#" alt="" class="google-img"> *@
-                <i class="bx bxl-google google-img"></i>
-                <span>Login with Google</span>
-            </a>
+            <form asp-action="ExternalLogin" asp-controller="Account" method="post" class="d-inline">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="provider" value="Google" />
+                <button type="submit" class="btn btn-google btn-block">
+                    <img src="~/img/google-icon-logo.svg" alt="Google Icon" class="google-icon" />
+                    <span>Login with Google</span>
+                </button>
+            </form>
         </div>
     </div>
 </section>
 
-
-
 @section Scripts {
+    <style>
+        .btn-google {
+            background-color: #4285F4; /* Google's blue */
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-google:hover {
+                background-color: #357ae8; /* Darker shade on hover */
+            }
+
+            .btn-google .google-icon {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+            }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .media-options {
+            margin-top: 20px;
+        }
+    </style>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

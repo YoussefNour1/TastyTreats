@@ -6,7 +6,7 @@ using TastyTreats.Models;
 
 namespace TastyTreats.Contexts
 {
-    public class TastyTreatsContext :IdentityDbContext<ApplicationUser>
+    public class TastyTreatsContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -15,9 +15,9 @@ namespace TastyTreats.Contexts
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+
         public TastyTreatsContext(DbContextOptions<TastyTreatsContext> options) : base(options)
         {
-            
         }
 
         public TastyTreatsContext()
@@ -68,7 +68,6 @@ namespace TastyTreats.Contexts
                 .HasForeignKey(i => i.CategoryId);
 
             // Dummy Data 
-                //user
             modelBuilder.Entity<User>().HasData(DummyUserContext.GetUsers().ToArray());
             modelBuilder.Entity<Category>().HasData(DummyCategoryContext.GetCategories().ToArray());
             modelBuilder.Entity<Item>().HasData(DummyItemContext.GetItems().ToArray());
@@ -77,7 +76,6 @@ namespace TastyTreats.Contexts
             modelBuilder.Entity<CartItem>().HasData(DummyCartItemContext.GetCartItems().ToArray());
             modelBuilder.Entity<Order>().HasData(DummyOrderContext.GetOrders().ToArray());
             modelBuilder.Entity<OrderItem>().HasData(DummyOrderItemContext.GetOrderItems().ToArray());
-
         }
     }
 }

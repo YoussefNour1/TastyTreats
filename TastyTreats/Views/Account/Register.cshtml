@@ -11,7 +11,7 @@
             <header class="text-light">Sign up</header>
             <form asp-action="Register" asp-controller="Account" method="post">
 
-                <div asp-validation-summary="All" class="text-white"></div>
+                <div asp-validation-summary="All" class="text-danger"></div>
 
                 <div class="field input-field mb-3">
                     <input asp-for="UserName" placeholder="UserName" class="form-control bg-dark text-light" />
@@ -20,22 +20,22 @@
 
                 <div class="field input-field mb-3">
                     <input asp-for="Email" placeholder="Email" class="form-control bg-dark text-light" />
-                    <span asp-validation-for="Email" class="text-white"></span>
+                    <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
 
                 <div class="field input-field mb-3">
                     <input asp-for="Address" placeholder="Address" class="form-control bg-dark text-light" />
-                    <span asp-validation-for="Address" class="text-white"></span>
+                    <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
 
                 <div class="field input-field mb-3">
                     <input asp-for="Password" type="password" placeholder="Create password" class="form-control bg-dark text-light" />
-                    <span asp-validation-for="Password" class="text-white"></span>
+                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
 
                 <div class="field input-field mb-3">
                     <input asp-for="ConfirmPassword" type="password" placeholder="Confirm password" class="form-control bg-dark text-light" />
-                    <span asp-validation-for="ConfirmPassword" class="text-white"></span>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
 
                 <div class="field button-field mb-3">
@@ -53,19 +53,59 @@
                 <i class='bx bxl-facebook facebook-icon'></i>
                 <span>Login with Facebook</span>
             </a>
-        </div>
+
         <div class="media-options">
-            <a href="#" class="field google">
-                <img src="#" alt="" class="google-img">
-                <span>Login with Google</span>
-            </a>
+            <form asp-action="ExternalLogin" asp-controller="Account" method="post" class="d-inline">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="provider" value="Google" />
+                <button type="submit" class="btn btn-google btn-block">
+                    <img src="~/img/google-icon-logo.svg"  alt="Google Icon" class="google-icon" />
+                    <span>Login with Google</span>
+                </button>
+            </form>
         </div>
+
+
     </div>   
   </div>
   </div>
 </section>
 
 @section Scripts {
+
+    <style>
+        .btn-google {
+            background-color: #4267b2; /* Google blue */
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-google:hover {
+                background-color: #357ae8; /* Darker shade on hover */
+            }
+
+            .btn-google .google-icon {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+            }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+    </style>
+
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

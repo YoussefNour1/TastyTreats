@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -73,7 +74,7 @@
 
                         <!-- Cart Icon  Should be replace UserId with the logged-in user's ID from the User.Identity-->
                         <li>
-                            <a asp-controller="Cart" asp-action="Details" asp-route-userId="3" class="nav-icon">
+                            <a asp-controller="Cart" asp-action="Details" asp-route-userId="@User.FindFirstValue(ClaimTypes.NameIdentifier)" class="nav-icon">
                                 <i class="bi bi-cart"></i> Cart
                             </a>
                         </li>
@@ -228,8 +229,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <!--For Toast (Cart)-->
+    @* <script>
+        $(document).ready(function () {
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>toastr.success('@TempData["SuccessMessage"]'); </text>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>toastr.error('@TempData["ErrorMessage"]'); </text>
+        }
+            });
+    </script> *@
+
     <script>
         $(document).ready(function () {
+            var isAuthenticated = @User.Identity.IsAuthenticated.ToString().ToLower(); // Pass authentication status to JS
+
+            // If not authenticated, show a toast on navigation button click
+            $("nav a").on("click", function (e) {
+                if (!isAuthenticated) {
+                    e.preventDefault();  // Prevent the navigation action
+                    toastr.error('You need to be logged in to access this feature!');
+                }
+            });
+
+            // Existing Toast for TempData success and error messages
         @if (TempData["SuccessMessage"] != null)
         {
             <text>toastr.success('@TempData["SuccessMessage"]'); </text>

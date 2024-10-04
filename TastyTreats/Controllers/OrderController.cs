@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using TastyTreats.Models;
@@ -6,6 +7,7 @@ using TastyTreats.Repositories.OrderRepos;
 
 namespace TastyTreats.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly  IOrderRepository _orderRepository;
