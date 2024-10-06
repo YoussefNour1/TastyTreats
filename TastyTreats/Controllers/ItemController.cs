@@ -40,29 +40,66 @@ namespace TastyTreats.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Add(Item item, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
                 if (imageFile != null && imageFile.Length > 0)
                 {
+                    Console.WriteLine($"Uploading file: {imageFile.FileName}, Size: {imageFile.Length}");
+
                     string fileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
                     string extension = Path.GetExtension(imageFile.FileName);
                     fileName = fileName + "_" + Guid.NewGuid().ToString() + extension;
 
-                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", fileName);
-
-                    using (var stream = new FileStream(path, FileMode.Create))
+                    string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+                    if (!Directory.Exists(folderPath))
                     {
-                        imageFile.CopyTo(stream);
+                        Directory.CreateDirectory(folderPath);
+                        Console.WriteLine($"Created directory: {folderPath}");
                     }
 
-                    item.ItemPicture = "/img/" + fileName;
+                    string path = Path.Combine(folderPath, fileName);
+
+                    try
+                    {
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            imageFile.CopyTo(stream);
+                        }
+                        item.ItemPicture = "/img/" + fileName;
+                        Console.WriteLine($"Image saved to {path}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error saving image: {ex.Message}");
+                        ModelState.AddModelError("ImageFile", "Could not save the image.");
+                    }
                 }
-                _itemRepository.Add(item);
-                _itemRepository.Save();
+                else
+                {
+                    Console.WriteLine("No image file uploaded.");
+                }
+
+                try
+                {
+                    _itemRepository.Add(item);
+                    _itemRepository.Save();
+                    Console.WriteLine("Item saved successfully.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error saving item: {ex.Message}");
+                    ModelState.AddModelError("", "Could not save the item.");
+                }
+
                 return RedirectToAction("Index");
+            }
+
+            Console.WriteLine("Model state is invalid");
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                Console.WriteLine(error.ErrorMessage); 
             }
             return View(item);
         }
