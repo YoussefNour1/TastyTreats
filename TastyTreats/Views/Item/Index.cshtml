@@ -15,10 +15,11 @@
         <tr>
             <th>Picture</th>
             <th>Name</th>
+            <th>Category</th>
             <th>Price</th>
             <th>Discount</th>
             <th>Final Price</th>
-            <th>Category</th>
+            <th>Description</th>
             <th>Available</th>
             <th></th>
         </tr>
@@ -38,10 +39,11 @@
                     }
                 </td>
                 <td>@item.Name</td>
+                <td>@item.Category</td>
                 <td>@item.Price.ToString("C")</td>
                 <td>@item.Discount?.ToString("C")</td>
                 <td>@item.FinalPrice.ToString("C")</td>
-                <td>@item.Category?.Name</td>
+                <td>@item.Description</td>
                 <td>@(item.Availability ? "Yes" : "No")</td>
                 <td>
                     @Html.ActionLink("Details", "Details", new { id = item.ItemId }, new { @class = "btn btn-info" }) |

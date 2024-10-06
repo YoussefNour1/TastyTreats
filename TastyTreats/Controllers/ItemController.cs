@@ -51,14 +51,14 @@ namespace TastyTreats.Controllers
                     string extension = Path.GetExtension(imageFile.FileName);
                     fileName = fileName + "_" + Guid.NewGuid().ToString() + extension;
 
-                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", fileName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
                         imageFile.CopyTo(stream);
                     }
 
-                    item.ItemPicture = "/images/" + fileName;
+                    item.ItemPicture = "/img/" + fileName;
                 }
                 _itemRepository.Add(item);
                 _itemRepository.Save();
@@ -88,20 +88,30 @@ namespace TastyTreats.Controllers
             {
                 var oldItem = _itemRepository.GetById(id);
 
+                if (oldItem == null)
+                {
+                    return NotFound(); 
+                }
+
                 if (imageFile != null && imageFile.Length > 0)
                 {
                     string fileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
                     string extension = Path.GetExtension(imageFile.FileName);
                     fileName = fileName + "_" + Guid.NewGuid().ToString() + extension;
 
-                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+                    string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+                    string path = Path.Combine(folderPath, fileName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
                         imageFile.CopyTo(stream);
                     }
 
-                    newItem.ItemPicture = "/images/" + fileName;
+                    newItem.ItemPicture = "/img/" + fileName;
                 }
                 else
                 {
@@ -111,16 +121,20 @@ namespace TastyTreats.Controllers
                 oldItem.ItemPicture = newItem.ItemPicture;
                 oldItem.Name = newItem.Name;
                 oldItem.Price = newItem.Price;
+                oldItem.Discount = newItem.Discount;
+                oldItem.Description = newItem.Description;
                 oldItem.Category = newItem.Category;
                 oldItem.Availability = newItem.Availability;
 
-                _itemRepository.Update(newItem);
+                _itemRepository.Update(oldItem); 
                 _itemRepository.Save();
+
                 return RedirectToAction("Index");
             }
 
             return View(newItem);
         }
+
 
         [HttpGet]
         public IActionResult Delete(int id)
