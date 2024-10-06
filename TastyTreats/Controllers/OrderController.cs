@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using TastyTreats.Models;
 using TastyTreats.Repositories.OrderRepos;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+
+
 
 namespace TastyTreats.Controllers
 {
@@ -15,10 +19,31 @@ namespace TastyTreats.Controllers
         {
             _orderRepository = orderRepository;
         }
-        public IActionResult Index()
+        public async  Task< IActionResult> Index()
         {
-           var ords= _orderRepository.GetAll();
-            return View(ords);
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userIdClaim == null || !int.TryParse(userIdClaim, out int userId))
+            {
+                return BadRequest("User ID is missing or invalid.");
+            }
+
+            IEnumerable<Order> orders;
+
+            // Check if the user has the role 'User'.
+            if (!User.IsInRole("User"))
+            {
+                // If the user is a 'User', get orders by their User ID.
+                orders = await _orderRepository.GetOrdersByUserId(userId);
+            }
+            else
+            {
+                // If the user has any other role (e.g., 'Admin'), get all orders.
+                orders =  _orderRepository.GetAll();
+            }
+
+            return View(orders);
+
         }
         public IActionResult Create()
         {

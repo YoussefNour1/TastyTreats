@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TastyTreats.Contexts.DummyData;
 using TastyTreats.Models;
+using TastyTreats.ViewModel;
 
 namespace TastyTreats.Contexts
 {
@@ -77,5 +78,6 @@ namespace TastyTreats.Contexts
             modelBuilder.Entity<Order>().HasData(DummyOrderContext.GetOrders().ToArray());
             modelBuilder.Entity<OrderItem>().HasData(DummyOrderItemContext.GetOrderItems().ToArray());
         }
+        public DbSet<TastyTreats.ViewModel.AddRoleViewModel> AddRoleViewModel { get; set; } = default!;
     }
 }

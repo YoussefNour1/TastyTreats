@@ -4,7 +4,7 @@ using TastyTreats.Models;
 
 namespace TastyTreats.Repositories.OrderRepos
 {
-    public class OrderRepository:IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         TastyTreatsContext context;
 
@@ -71,7 +71,7 @@ namespace TastyTreats.Repositories.OrderRepos
                 FirstOrDefault(O => O.OrderId == id);
         }
 
-        public List<Order> GetAll()
+        public IEnumerable<Order> GetAll()
         {
             return context.Orders.Include(o=>o.OrderItems).Include(u=>u.User).ToList();
         }
@@ -79,5 +79,16 @@ namespace TastyTreats.Repositories.OrderRepos
         {
            await context.SaveChangesAsync();
         }
+        public async Task<List<Order>> GetOrdersByUserId(int userId)
+        {
+            return await context.Orders
+                .Include(o => o.User)
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Item)
+                .Where(o => o.UserId == userId)
+                .ToListAsync();
+        }
+
+       
     }
 }
