@@ -40,29 +40,66 @@ namespace TastyTreats.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Add(Item item, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
                 if (imageFile != null && imageFile.Length > 0)
                 {
+                    Console.WriteLine($"Uploading file: {imageFile.FileName}, Size: {imageFile.Length}");
+
                     string fileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
                     string extension = Path.GetExtension(imageFile.FileName);
                     fileName = fileName + "_" + Guid.NewGuid().ToString() + extension;
 
-                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
-
-                    using (var stream = new FileStream(path, FileMode.Create))
+                    string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+                    if (!Directory.Exists(folderPath))
                     {
-                        imageFile.CopyTo(stream);
+                        Directory.CreateDirectory(folderPath);
+                        Console.WriteLine($"Created directory: {folderPath}");
                     }
 
-                    item.ItemPicture = "/images/" + fileName;
+                    string path = Path.Combine(folderPath, fileName);
+
+                    try
+                    {
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            imageFile.CopyTo(stream);
+                        }
+                        item.ItemPicture = "/img/" + fileName;
+                        Console.WriteLine($"Image saved to {path}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error saving image: {ex.Message}");
+                        ModelState.AddModelError("ImageFile", "Could not save the image.");
+                    }
                 }
-                _itemRepository.Add(item);
-                _itemRepository.Save();
+                else
+                {
+                    Console.WriteLine("No image file uploaded.");
+                }
+
+                try
+                {
+                    _itemRepository.Add(item);
+                    _itemRepository.Save();
+                    Console.WriteLine("Item saved successfully.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error saving item: {ex.Message}");
+                    ModelState.AddModelError("", "Could not save the item.");
+                }
+
                 return RedirectToAction("Index");
+            }
+
+            Console.WriteLine("Model state is invalid");
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                Console.WriteLine(error.ErrorMessage); 
             }
             return View(item);
         }
@@ -88,20 +125,30 @@ namespace TastyTreats.Controllers
             {
                 var oldItem = _itemRepository.GetById(id);
 
+                if (oldItem == null)
+                {
+                    return NotFound(); 
+                }
+
                 if (imageFile != null && imageFile.Length > 0)
                 {
                     string fileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
                     string extension = Path.GetExtension(imageFile.FileName);
                     fileName = fileName + "_" + Guid.NewGuid().ToString() + extension;
 
-                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+                    string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+                    string path = Path.Combine(folderPath, fileName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
                         imageFile.CopyTo(stream);
                     }
 
-                    newItem.ItemPicture = "/images/" + fileName;
+                    newItem.ItemPicture = "/img/" + fileName;
                 }
                 else
                 {
@@ -111,16 +158,20 @@ namespace TastyTreats.Controllers
                 oldItem.ItemPicture = newItem.ItemPicture;
                 oldItem.Name = newItem.Name;
                 oldItem.Price = newItem.Price;
+                oldItem.Discount = newItem.Discount;
+                oldItem.Description = newItem.Description;
                 oldItem.Category = newItem.Category;
                 oldItem.Availability = newItem.Availability;
 
-                _itemRepository.Update(newItem);
+                _itemRepository.Update(oldItem); 
                 _itemRepository.Save();
+
                 return RedirectToAction("Index");
             }
 
             return View(newItem);
         }
+
 
         [HttpGet]
         public IActionResult Delete(int id)

@@ -68,7 +68,7 @@ namespace TastyTreats.Contexts
                 .WithOne(i => i.Category)
                 .HasForeignKey(i => i.CategoryId);
 
-            // Dummy Data 
+            //// Dummy Data 
             modelBuilder.Entity<User>().HasData(DummyUserContext.GetUsers().ToArray());
             modelBuilder.Entity<Category>().HasData(DummyCategoryContext.GetCategories().ToArray());
             modelBuilder.Entity<Item>().HasData(DummyItemContext.GetItems().ToArray());
