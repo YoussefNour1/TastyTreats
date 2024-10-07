@@ -166,8 +166,6 @@ namespace TastyTreats.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -178,7 +176,6 @@ namespace TastyTreats.Migrations
                     b.Property<string>("City")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -471,7 +468,6 @@ namespace TastyTreats.Migrations
 
                     b.HasIndex("UserId1");
 
-
                     b.HasData(
                         new
                         {
@@ -491,7 +487,6 @@ namespace TastyTreats.Migrations
                         });
 
                     b.ToTable("Orders");
-
                 });
 
             modelBuilder.Entity("TastyTreats.Models.OrderItem", b =>

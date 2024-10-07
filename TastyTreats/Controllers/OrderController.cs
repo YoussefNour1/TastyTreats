@@ -14,7 +14,7 @@ namespace TastyTreats.Controllers
     [Authorize]
     public class OrderController : Controller
     {
-        private readonly  IOrderRepository _orderRepository;
+        private readonly IOrderRepository _orderRepository;
         public OrderController(IOrderRepository orderRepository)
         {
             _orderRepository = orderRepository;
@@ -34,8 +34,6 @@ namespace TastyTreats.Controllers
             IEnumerable<Order> orders;
 
             // Check if the user has the role 'User'.
-        
-            
             if (!User.IsInRole("User"))
             {
                 // If the user is a 'User', get orders by their User ID.
@@ -44,14 +42,12 @@ namespace TastyTreats.Controllers
             else
             {
                 // If the user has any other role (e.g., 'Admin'), get all orders.
-                orders =  _orderRepository.GetAll();
+                orders = _orderRepository.GetAll();
             }
 
             return View(orders);
 
-
         }
-        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -59,14 +55,14 @@ namespace TastyTreats.Controllers
 
         public IActionResult Details(int id)
         {
-            var data= _orderRepository.Details(id);
+            var data = _orderRepository.Details(id);
             if (data == null)
             {
                 return NotFound();
             }
             return View(data);
         }
-        
+
 
 
         [HttpPost]
@@ -75,10 +71,8 @@ namespace TastyTreats.Controllers
         {
             if (ModelState.IsValid)
             {
+                await _orderRepository.Add(UserId);
                 //_orderRepository.Save();
-                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                await _orderRepository.Add(userId);
-
 
                 TempData["success"] = "Order Added successfully";
 
@@ -116,7 +110,7 @@ namespace TastyTreats.Controllers
         public IActionResult Delete(int? Id)
         {
 
-          
+
             _orderRepository.Delete(Id);
             _orderRepository.Save();
             TempData["success"] = "Order Deleted successfully";

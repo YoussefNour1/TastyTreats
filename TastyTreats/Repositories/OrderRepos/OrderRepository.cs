@@ -88,7 +88,5 @@ namespace TastyTreats.Repositories.OrderRepos
                 .Where(o => o.UserId == userId)
                 .ToListAsync();
         }
-
-       
     }
 }

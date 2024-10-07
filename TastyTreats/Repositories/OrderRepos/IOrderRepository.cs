@@ -17,8 +17,8 @@ namespace TastyTreats.Repositories.OrderRepos
         public IEnumerable<Order> GetAll();
 
         public  Task  Save();
-        public  Task<List<Order>> GetOrdersByUserId(int userId);
-
+        public Task<List<Order>> GetOrdersByUserId(int userId);
+        
 
     }
 }

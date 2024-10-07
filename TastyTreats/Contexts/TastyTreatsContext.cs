@@ -72,17 +72,23 @@ namespace TastyTreats.Contexts
                 .WithOne(i => i.Category)
                 .HasForeignKey(i => i.CategoryId);
 
+
+            // Dummy Data 
+                //user
             modelBuilder.Entity<User>().HasData(DummyUserContext.GetUsers().ToArray());
 
+            //// Dummy Data 
+            //modelBuilder.Entity<User>().HasData(DummyUserContext.GetUsers().ToArray());
             modelBuilder.Entity<Category>().HasData(DummyCategoryContext.GetCategories().ToArray());
             modelBuilder.Entity<Item>().HasData(DummyItemContext.GetItems().ToArray());
             modelBuilder.Entity<Cart>().HasData(DummyCartContext.GetCarts().ToArray());
 
             modelBuilder.Entity<CartItem>().HasData(DummyCartItemContext.GetCartItems().ToArray());
-
             modelBuilder.Entity<Order>().HasData(DummyOrderContext.GetOrders().ToArray());
             modelBuilder.Entity<OrderItem>().HasData(DummyOrderItemContext.GetOrderItems().ToArray());
 
+            //modelBuilder.Entity<Order>().HasData(DummyOrderContext.GetOrders().ToArray());
+            //modelBuilder.Entity<OrderItem>().HasData(DummyOrderItemContext.GetOrderItems().ToArray());
         }
         public DbSet<TastyTreats.ViewModel.AddRoleViewModel> AddRoleViewModel { get; set; } = default!;
     }
