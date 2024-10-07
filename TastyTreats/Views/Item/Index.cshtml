@@ -39,7 +39,7 @@
                     }
                 </td>
                 <td>@item.Name</td>
-                <td>@item.Category</td>
+                <td>@item.Category?.Name</td>
                 <td>@item.Price.ToString("C")</td>
                 <td>@item.Discount?.ToString("C")</td>
                 <td>@item.FinalPrice.ToString("C")</td>

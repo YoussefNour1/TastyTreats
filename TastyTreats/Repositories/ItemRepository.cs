@@ -1,4 +1,5 @@
-﻿using TastyTreats.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using TastyTreats.Contexts;
 using TastyTreats.Models;
 
 namespace TastyTreats.Repositories
@@ -47,6 +48,11 @@ namespace TastyTreats.Repositories
         public void Save()
         {
             context.SaveChanges();
+        }
+
+        public IEnumerable<Category> GetCategories()
+        {
+            return context.Categories.ToList();
         }
     }
 }

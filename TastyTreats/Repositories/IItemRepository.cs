@@ -9,6 +9,7 @@ namespace TastyTreats.Repositories
         public void Delete(int id);
         public Item GetById(int id);
         public List<Item> GetAll();
+        public IEnumerable<Category> GetCategories();
         public void Save();
     }
 }

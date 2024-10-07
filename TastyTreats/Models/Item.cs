@@ -11,7 +11,7 @@ namespace TastyTreats.Models
         [StringLength(100)]
         public string Name { get; set; }
 
-        public string ItemPicture { get; set; }
+        public string? ItemPicture { get; set; }
 
         [Required]
         public decimal Price { get; set; }
@@ -32,10 +32,10 @@ namespace TastyTreats.Models
 
         // Relationships
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
 
-        public ICollection<OrderItem> OrderItems { get; set; }
-        public ICollection<CartItem> CartItems { get; set; }
+        public ICollection<OrderItem>? OrderItems { get; set; }
+        public ICollection<CartItem>? CartItems { get; set; }
     }
 
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TastyTreats.Models;
 using TastyTreats.Repositories;
 
@@ -36,18 +37,42 @@ namespace TastyTreats.Controllers
         [HttpGet]
         public IActionResult Add()
         {
+            ViewBag.Categ = new SelectList(_itemRepository.GetCategories().ToList(), "CategoryId", "Name");
             return View(new Item());
         }
 
         [HttpPost]
-        public IActionResult Add(Item item)
+        public IActionResult Add(Item item, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
+                    string extension = Path.GetExtension(imageFile.FileName);
+                    fileName = fileName + "_" + Guid.NewGuid().ToString() + extension;
+
+                    string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    string path = Path.Combine(folderPath, fileName);
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        imageFile.CopyTo(stream);
+                    }
+                    item.ItemPicture = "/img/" + fileName;
+                }
+
                 _itemRepository.Add(item);
                 _itemRepository.Save();
+
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Categ = new SelectList(_itemRepository.GetCategories(), "CategoryId", "Name");
             return View(item);
         }
 
@@ -55,26 +80,24 @@ namespace TastyTreats.Controllers
         public IActionResult Edit(int id)
         {
             var item = _itemRepository.GetById(id);
-            if (item != null)
+            if (item == null)
             {
-                return View(item);
+                return NotFound();
             }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+
+            ViewBag.Categ = new SelectList(_itemRepository.GetCategories().ToList(), "CategoryId", "Name", item.CategoryId);
+            return View(item);
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, Item newItem, IFormFile imageFile)
+        public IActionResult Edit(int id, Item newItem, IFormFile? imageFile)
         {
-            if (newItem.Name != null)
+            if (ModelState.IsValid)
             {
                 var oldItem = _itemRepository.GetById(id);
-
                 if (oldItem == null)
                 {
-                    return NotFound(); 
+                    return NotFound();
                 }
 
                 if (imageFile != null && imageFile.Length > 0)
@@ -88,37 +111,35 @@ namespace TastyTreats.Controllers
                     {
                         Directory.CreateDirectory(folderPath);
                     }
-                    string path = Path.Combine(folderPath, fileName);
 
+                    string path = Path.Combine(folderPath, fileName);
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
                         imageFile.CopyTo(stream);
                     }
-
                     newItem.ItemPicture = "/img/" + fileName;
                 }
                 else
                 {
-                    newItem.ItemPicture = oldItem.ItemPicture;
+                    oldItem.ItemPicture =  newItem.ItemPicture?? oldItem.ItemPicture;
                 }
 
-                oldItem.ItemPicture = newItem.ItemPicture;
                 oldItem.Name = newItem.Name;
                 oldItem.Price = newItem.Price;
                 oldItem.Discount = newItem.Discount;
                 oldItem.Description = newItem.Description;
-                oldItem.Category = newItem.Category;
+                oldItem.CategoryId = newItem.CategoryId;
                 oldItem.Availability = newItem.Availability;
 
-                _itemRepository.Update(oldItem); 
+                _itemRepository.Update(oldItem);
                 _itemRepository.Save();
 
                 return RedirectToAction("Index");
             }
 
+            ViewBag.Categ = new SelectList(_itemRepository.GetCategories(), "CategoryId", "Name", newItem.CategoryId);
             return View(newItem);
         }
-
 
         [HttpGet]
         public IActionResult Delete(int id)
