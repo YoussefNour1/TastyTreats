@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TastyTreats.Models;
-using TastyTreats.Repositories;
+using TastyTreats.Repositories.ItemRepos;
 
 namespace TastyTreats.Controllers
 {
@@ -31,6 +31,7 @@ namespace TastyTreats.Controllers
             {
                 return NotFound();
             }
+            
             return View(item);
         }
 
@@ -121,7 +122,7 @@ namespace TastyTreats.Controllers
                 }
                 else
                 {
-                    oldItem.ItemPicture =  newItem.ItemPicture?? oldItem.ItemPicture;
+                   newItem.ItemPicture =oldItem.ItemPicture;
                 }
 
                 oldItem.Name = newItem.Name;

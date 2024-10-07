@@ -1,9 +1,10 @@
 ﻿using TastyTreats.Models;
 
-namespace TastyTreats.Repositories
+namespace TastyTreats.Repositories.ItemRepos
 {
     public interface IItemRepository
     {
+        
         public void Add(Item item);
         public void Update(Item item);
         public void Delete(int id);

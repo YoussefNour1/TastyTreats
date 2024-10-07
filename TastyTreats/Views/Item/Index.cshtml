@@ -1,5 +1,4 @@
-﻿@model List<Item>
-
+﻿
 @{
     ViewBag.Title = "Items";
 }
@@ -39,10 +38,10 @@
                     }
                 </td>
                 <td>@item.Name</td>
-                <td>@item.Category?.Name</td>
-                <td>@item.Price.ToString("C")</td>
-                <td>@item.Discount?.ToString("C")</td>
-                <td>@item.FinalPrice.ToString("C")</td>
+                <td>@item.Category.Name</td>
+                <td>@item.Price.ToString()</td>
+                <td>@item.Discount?.ToString()</td>
+                <td>@item.FinalPrice.ToString()</td>
                 <td>@item.Description</td>
                 <td>@(item.Availability ? "Yes" : "No")</td>
                 <td>

@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TastyTreats.Contexts;
 using TastyTreats.Models;
 
-namespace TastyTreats.Repositories
+namespace TastyTreats.Repositories.ItemRepos
 {
     public class ItemRepository : IItemRepository
     {
@@ -10,10 +11,9 @@ namespace TastyTreats.Repositories
 
         public ItemRepository(TastyTreatsContext _context)
         {
-            context=_context;  
+            context = _context;
         }
 
-     
         // CRUD 
 
         public void Add(Item item)
@@ -23,7 +23,7 @@ namespace TastyTreats.Repositories
 
         public void Update(Item item)
         {
-            context.Items.Update(item); 
+            context.Items.Update(item);
         }
 
         public void Delete(int id)
@@ -37,13 +37,30 @@ namespace TastyTreats.Repositories
 
         public Item GetById(int id)
         {
-            return  context.Items.FirstOrDefault(i => i.ItemId == id);
+            return context.Items.FirstOrDefault(i => i.ItemId == id);
         }
 
         public List<Item> GetAll()
         {
-            return context.Items.ToList();
+            var ItemList = context.Items.Include(i => i.Category)
+                .Select(i => new Item 
+                {
+                    ItemId = i.ItemId,
+                    Name = i.Name,
+                    Description = i.Description,
+                    ItemPicture = i.ItemPicture,
+                    Category = i.Category,
+                    Availability = i.Availability
+                }).ToList();
+            foreach (var item in ItemList)
+            {
+                item.Category.Name = context.Categories
+                    .FirstOrDefault(c => c.CategoryId == item.Category.CategoryId)?.Name;
+            }
+
+            return ItemList;
         }
+
 
         public void Save()
         {
