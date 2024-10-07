@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TastyTreats.Controllers
 {
-    [Authorize(RoleCont)]
+    [Authorize(Roles = "admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole<int>> _roleManager;
