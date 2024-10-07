@@ -21,6 +21,9 @@ namespace TastyTreats.Controllers
         }
         public async  Task< IActionResult> Index()
         {
+
+           var ords= _orderRepository.GetAll();
+
             var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
             if (userIdClaim == null || !int.TryParse(userIdClaim, out int userId))
@@ -31,6 +34,8 @@ namespace TastyTreats.Controllers
             IEnumerable<Order> orders;
 
             // Check if the user has the role 'User'.
+        
+            
             if (!User.IsInRole("User"))
             {
                 // If the user is a 'User', get orders by their User ID.
@@ -44,7 +49,9 @@ namespace TastyTreats.Controllers
 
             return View(orders);
 
+
         }
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -68,8 +75,10 @@ namespace TastyTreats.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _orderRepository.Add(UserId);
-                 //_orderRepository.Save();
+                //_orderRepository.Save();
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                await _orderRepository.Add(userId);
+
 
                 TempData["success"] = "Order Added successfully";
 

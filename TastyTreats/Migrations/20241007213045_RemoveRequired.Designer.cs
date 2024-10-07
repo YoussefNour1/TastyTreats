@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyTreats.Contexts;
 
@@ -11,9 +12,11 @@ using TastyTreats.Contexts;
 namespace TastyTreats.Migrations
 {
     [DbContext(typeof(TastyTreatsContext))]
-    partial class TastyTreatsContextModelSnapshot : ModelSnapshot
+    [Migration("20241007213045_RemoveRequired")]
+    partial class RemoveRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,16 +172,13 @@ namespace TastyTreats.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("CartId")
                         .HasColumnType("int");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -223,7 +223,7 @@ namespace TastyTreats.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Phone")
+                    b.Property<int>("Phone")
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
@@ -249,6 +249,7 @@ namespace TastyTreats.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZipCode")
+                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
@@ -471,27 +472,7 @@ namespace TastyTreats.Migrations
 
                     b.HasIndex("UserId1");
 
-
-                    b.HasData(
-                        new
-                        {
-                            OrderId = 1,
-                            CreatedAt = new DateTime(2024, 10, 3, 22, 17, 49, 983, DateTimeKind.Local).AddTicks(5390),
-                            OrderStatus = "Completed",
-                            TotalPrice = 5.97m,
-                            UserId = 1
-                        },
-                        new
-                        {
-                            OrderId = 2,
-                            CreatedAt = new DateTime(2024, 10, 3, 22, 17, 49, 983, DateTimeKind.Local).AddTicks(5457),
-                            OrderStatus = "Pending",
-                            TotalPrice = 2.49m,
-                            UserId = 2
-                        });
-
                     b.ToTable("Orders");
-
                 });
 
             modelBuilder.Entity("TastyTreats.Models.OrderItem", b =>
@@ -521,25 +502,6 @@ namespace TastyTreats.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderItems");
-
-                    b.HasData(
-                        new
-                        {
-                            OrderItemId = 1,
-                            CreatedAt = new DateTime(2024, 10, 3, 22, 17, 49, 983, DateTimeKind.Local).AddTicks(5504),
-                            ItemId = 1,
-                            OrderId = 1,
-                            Quantity = 2
-                        },
-                        new
-                        {
-                            OrderItemId = 2,
-                            CreatedAt = new DateTime(2024, 10, 3, 22, 17, 49, 983, DateTimeKind.Local).AddTicks(5514),
-                            ItemId = 2,
-                            OrderId = 2,
-                            Quantity = 1
-                        });
-
                 });
 
             modelBuilder.Entity("TastyTreats.Models.User", b =>

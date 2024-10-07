@@ -20,7 +20,7 @@ namespace TastyTreats.Models
 
         // Relationships
         public int UserId { get; set; }
-        public User User { get; set; }
+        public ApplicationUser User { get; set; }
 
         public ICollection<OrderItem> OrderItems { get; set; }
 
