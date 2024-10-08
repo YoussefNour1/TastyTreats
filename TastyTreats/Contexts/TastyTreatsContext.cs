@@ -33,7 +33,7 @@ namespace TastyTreats.Contexts
                 .Property(u => u.Role)
                 .HasConversion<string>();
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Orders)
                 .WithOne(o => o.User)
                 .HasForeignKey(o => o.UserId);
@@ -69,14 +69,14 @@ namespace TastyTreats.Contexts
                 .HasForeignKey(i => i.CategoryId);
 
             //// Dummy Data 
-            modelBuilder.Entity<User>().HasData(DummyUserContext.GetUsers().ToArray());
+            //modelBuilder.Entity<User>().HasData(DummyUserContext.GetUsers().ToArray());
             modelBuilder.Entity<Category>().HasData(DummyCategoryContext.GetCategories().ToArray());
             modelBuilder.Entity<Item>().HasData(DummyItemContext.GetItems().ToArray());
             modelBuilder.Entity<Cart>().HasData(DummyCartContext.GetCarts().ToArray());
 
             modelBuilder.Entity<CartItem>().HasData(DummyCartItemContext.GetCartItems().ToArray());
-            modelBuilder.Entity<Order>().HasData(DummyOrderContext.GetOrders().ToArray());
-            modelBuilder.Entity<OrderItem>().HasData(DummyOrderItemContext.GetOrderItems().ToArray());
+            //modelBuilder.Entity<Order>().HasData(DummyOrderContext.GetOrders().ToArray());
+            //modelBuilder.Entity<OrderItem>().HasData(DummyOrderItemContext.GetOrderItems().ToArray());
         }
         public DbSet<TastyTreats.ViewModel.AddRoleViewModel> AddRoleViewModel { get; set; } = default!;
     }

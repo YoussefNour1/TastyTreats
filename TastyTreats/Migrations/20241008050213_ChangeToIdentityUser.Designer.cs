@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyTreats.Contexts;
 
@@ -11,9 +12,11 @@ using TastyTreats.Contexts;
 namespace TastyTreats.Migrations
 {
     [DbContext(typeof(TastyTreatsContext))]
-    partial class TastyTreatsContextModelSnapshot : ModelSnapshot
+    [Migration("20241008050213_ChangeToIdentityUser")]
+    partial class ChangeToIdentityUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,17 +249,10 @@ namespace TastyTreats.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("int");
-
                     b.HasKey("CartId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
-
-                    b.HasIndex("UserId1")
-                        .IsUnique()
-                        .HasFilter("[UserId1] IS NOT NULL");
 
                     b.ToTable("Carts");
 
@@ -437,7 +433,7 @@ namespace TastyTreats.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId1")
+                    b.Property<int>("UserId1")
                         .HasColumnType("int");
 
                     b.HasKey("OrderId");
@@ -591,15 +587,11 @@ namespace TastyTreats.Migrations
 
             modelBuilder.Entity("TastyTreats.Models.Cart", b =>
                 {
-                    b.HasOne("TastyTreats.Models.ApplicationUser", "User")
+                    b.HasOne("TastyTreats.Models.User", "User")
                         .WithOne("Cart")
                         .HasForeignKey("TastyTreats.Models.Cart", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("TastyTreats.Models.User", null)
-                        .WithOne("Cart")
-                        .HasForeignKey("TastyTreats.Models.Cart", "UserId1");
 
                     b.Navigation("User");
                 });
@@ -644,7 +636,9 @@ namespace TastyTreats.Migrations
 
                     b.HasOne("TastyTreats.Models.User", null)
                         .WithMany("Orders")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -670,8 +664,6 @@ namespace TastyTreats.Migrations
 
             modelBuilder.Entity("TastyTreats.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Cart");
-
                     b.Navigation("Orders");
                 });
 

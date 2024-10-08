@@ -15,7 +15,7 @@ namespace TastyTreats.Models
 
         [Required]     //check that the user is associated with the cart
         public int UserId { get; set; }
-        public User User { get; set; }
+        public ApplicationUser User { get; set; }
 
         public ICollection<CartItem> CartItems { get; set; }
     }

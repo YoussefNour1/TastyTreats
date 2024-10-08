@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TastyTreats.Models
 {
@@ -18,12 +19,13 @@ namespace TastyTreats.Models
 
         public DateTime? UpdatedAt { get; set; }
 
-        // Relationships
+        // Foreign Key
+        [ForeignKey("User")]
         public int UserId { get; set; }
-        public User User { get; set; }
+
+        // Navigation Property
+        public ApplicationUser User { get; set; }
 
         public ICollection<OrderItem> OrderItems { get; set; }
-
     }
-
 }
