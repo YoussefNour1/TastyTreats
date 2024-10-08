@@ -47,6 +47,9 @@ namespace TastyTreats.Repositories.ItemRepos
                 {
                     ItemId = i.ItemId,
                     Name = i.Name,
+                    Price=i.Price,
+                    Discount=i.Discount,
+                    
                     Description = i.Description,
                     ItemPicture = i.ItemPicture,
                     Category = i.Category,
