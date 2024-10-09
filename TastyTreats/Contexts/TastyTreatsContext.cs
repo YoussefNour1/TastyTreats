@@ -70,7 +70,9 @@ namespace TastyTreats.Contexts
 
             //// Dummy Data 
             //modelBuilder.Entity<User>().HasData(DummyUserContext.GetUsers().ToArray());
+
             modelBuilder.Entity<Category>().HasData(DummyCategoryContext.GetCategories().ToArray());
+            modelBuilder.Entity<Role>().HasData(DummyRolesContext.GetRoles().ToArray());
             modelBuilder.Entity<Item>().HasData(DummyItemContext.GetItems().ToArray());
             modelBuilder.Entity<Cart>().HasData(DummyCartContext.GetCarts().ToArray());
 
