@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using System.Net;
 using System.Security.Claims;
@@ -106,7 +107,11 @@ namespace TastyTreats.Controllers
             if (ModelState.IsValid)
             {
                 //step2-- > Check if user exists using UserName or Email
-                var applicationUser = await _userManager.FindByEmailAsync(loginViewModel.Email);
+                //var applicationUser = await _userManager.FindByEmailAsync(loginViewModel.Email);
+                var applicationUser = await _userManager.Users
+                .Where(u => u.Email == loginViewModel.Email)
+                .FirstOrDefaultAsync();
+
                 if (applicationUser != null)
                 {
                     // step3--> Check if password not null

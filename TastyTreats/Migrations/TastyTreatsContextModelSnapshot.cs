@@ -258,7 +258,7 @@ namespace TastyTreats.Migrations
                         .IsUnique()
                         .HasFilter("[UserId1] IS NOT NULL");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
 
                     b.HasData(
                         new
@@ -296,7 +296,7 @@ namespace TastyTreats.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItems", (string)null);
 
                     b.HasData(
                         new
@@ -334,7 +334,7 @@ namespace TastyTreats.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -387,7 +387,7 @@ namespace TastyTreats.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
 
                     b.HasData(
                         new
@@ -446,7 +446,7 @@ namespace TastyTreats.Migrations
 
                     b.HasIndex("UserId1");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("TastyTreats.Models.OrderItem", b =>
@@ -475,7 +475,7 @@ namespace TastyTreats.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("TastyTreats.Models.Role", b =>
@@ -559,7 +559,7 @@ namespace TastyTreats.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("TastyTreats.ViewModel.AddRoleViewModel", b =>
@@ -568,7 +568,7 @@ namespace TastyTreats.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("AddRoleViewModel");
+                    b.ToTable("AddRoleViewModel", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
