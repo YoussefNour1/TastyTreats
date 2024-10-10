@@ -1,4 +1,6 @@
-﻿@{
+﻿@model TastyTreats.ViewModel.ItemCategoryViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -110,141 +112,66 @@
         <p>Check Our Tasty Menu</p>
       </div><!-- End Section Title -->
 
-      <div class="container isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-        <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul class="menu-filters isotope-filters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-starters">Starters</li>
-              <li data-filter=".filter-salads">Salads</li>
-              <li data-filter=".filter-specialty">Specialty</li>
-            </ul>
-          </div>
-        </div><!-- Menu Filters -->
-
-        <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
-
-          <div class="col-lg-6 menu-item isotope-item filter-starters">
-              <a asp-controller="Item" asp-action="Details" asp-route-id="6">
-                <img src="~/img/menu/lobster-bisque.jpg" class="menu-img" alt="">
-              </a>
-      
-            <div class="menu-content">
-              <a href="#">Lobster Bisque</a><span>$5.95</span>
-            </div>
-            <div class="menu-ingredients">
-             Lobster Bisque is a rich and creamy soup made from a flavorful broth of lobster shells, butter, cream, and aromatic herbs, offering a luxurious and velvety texture with a delicate seafood flavor.
-            </div>
-          </div><!-- Menu Item -->
-
-          <div class="col-lg-6 menu-item isotope-item filter-specialty">
-              <a asp-controller="Item" asp-action="Details" asp-route-id="7">
-                <img src="~/img/menu/bread-barrel.jpg" class="menu-img" alt="">
-              </a>
-           
-            <div class="menu-content">
-              <a href="#">Bread Barrel</a><span>$6.95</span>
-            </div>
-            <div class="menu-ingredients">
-               A Bread Barrel is a rustic, round loaf of bread typically baked in a cylindrical shape, offering a hearty crust and soft interior, perfect for tearing and sharing at communal meals.
-            </div>
-          </div><!-- Menu Item -->
-
-          <div class="col-lg-6 menu-item isotope-item filter-starters">
-
-             <a asp-controller="Item" asp-action="Details" asp-route-id="4">
-             <img src="~/img/menu/cake.jpg" class="menu-img" alt="">
-              </a>
-            
-            <div class="menu-content">
-              <a href="#">Crab Cake</a><span>$7.95</span>
-            </div>
-            <div class="menu-ingredients">
-              A delicate crab cake served on a toasted roll with lettuce and tartar sauce
-            </div>
-          </div><!-- Menu Item -->
-
-          <div class="col-lg-6 menu-item isotope-item filter-salads">
-              <a asp-controller="Item" asp-action="Details" asp-route-id="8">
-                <img src="~/img/menu/caesar.jpg" class="menu-img" alt="">
-              </a>
-            
-            <div class="menu-content">
-              <a href="#">Caesar Selections</a><span>$8.95</span>
-            </div>
-            <div class="menu-ingredients">
-                 Caesar Selections typically refer to a variety of dishes inspired by the classic Caesar salad, featuring crisp romaine lettuce, creamy Caesar dressing, croutons, Parmesan cheese, and often accompanied by toppings like grilled chicken, shrimp, or anchovies.
-            </div>
-          </div><!-- Menu Item -->
-
-          <div class="col-lg-6 menu-item isotope-item filter-specialty">
-            <a asp-controller="Item" asp-action="Details" asp-route-id="5">
-            <img src="~/img/menu/tuscan-grilled.jpg" class="menu-img" alt="">
-            </a>
-
-            <div class="menu-content">
-                <a href="#">Tuscan Grille</a><span>$9.95</span>
-            </div>
-
-            <div class="menu-ingredients">
-              Grilled chicken with provolone, artichoke hearts, and roasted red pesto
-            </div>
-          </div><!-- Menu Item -->
-
-          <div class="col-lg-6 menu-item isotope-item filter-starters">
-              <a asp-controller="Item" asp-action="Details" asp-route-id="3">
-                <img src="~/img/menu/mozzarella.jpg" class="menu-img" alt="">
-                <div class="menu-content">
-                    <a href="#">Mozzarella Stick</a><span>$4.95</span>
+        <<div class="container isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <ul class="menu-filters isotope-filters">
+                        <li data-filter="*" class="filter-active">
+                            <a asp-action="Index" asp-route-pageNumber="1" asp-route-pageSize="ViewBag.CurrentPage" asp-route-searchTerm="All">All</a>
+                        </li>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <li>
+                                <a asp-action="Index" asp-route-pageNumber="1" asp-route-pageSize="ViewBag.CurrentPage" asp-route-searchTerm="@category.Name">@category.Name</a>
+                            </li>
+                        }
+                    </ul>
                 </div>
-              </a>
-            <div class="menu-ingredients">
-              Lorem, deren, trataro, filede, nerada
-            </div>
-          </div><!-- Menu Item -->
+            </div><!-- Menu Filters -->
 
-          <div class="col-lg-6 menu-item isotope-item filter-salads">
-              <a asp-controller="Item" asp-action="Details" asp-route-id="9">
-                <img src="~/img/menu/greek-salad.jpg" class="menu-img" alt="">
-              </a>
-            <div class="menu-content">
-              <a href="#">Greek Salad</a><span>$9.95</span>
-            </div>
-            <div class="menu-ingredients">
-              Fresh spinach, crisp romaine, tomatoes, and Greek olives
-            </div>
-          </div><!-- Menu Item -->
 
-          <div class="col-lg-6 menu-item isotope-item filter-salads">
-              <a asp-controller="Item" asp-action="Details" asp-route-id="10">
-                <img src="~/img/menu/spinach-salad.jpg" class="menu-img" alt="">
-              </a>
-            
-            <div class="menu-content">
-              <a href="#">Spinach Salad</a><span>$9.95</span>
-            </div>
-            <div class="menu-ingredients">
-              Fresh spinach with mushrooms, hard boiled egg, and warm bacon vinaigrette
-            </div>
-          </div><!-- Menu Item -->
+            <div class="container">
+                <!-- Search Form -->
+               
+                <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
+                    @foreach (var item in Model.Items)
+                    {
+                        <div class="col-lg-4 col-md-6 menu-item isotope-item">
+                            <a asp-controller="Item" asp-action="Details" asp-route-id="@item.ItemId">
+                                <img src="@Url.Content(item.ItemPicture)" class="menu-img" alt="@item.Name" />
+                            </a>
+                            <div class="menu-content">
+                                <a href="#">@item.Name</a><span>@item.Price.ToString("C")</span>
+                            </div>
+                            <div class="menu-ingredients">
+                                @item.Description
+                            </div>
+                        </div>
 
-          <div class="col-lg-6 menu-item isotope-item filter-specialty">
-              <a asp-controller="Item" asp-action="Details" asp-route-id="11">
-                <img src="~/img/menu/lobster-roll.jpg" class="menu-img" alt="">
-              </a>
-           
-            <div class="menu-content">
-              <a href="#">Lobster Roll</a><span>$12.95</span>
-            </div>
-            <div class="menu-ingredients">
-              Plump lobster meat, mayo and crisp lettuce on a toasted bulky roll
-            </div>
-          </div><!-- Menu Item -->
+                        <!-- Menu Item -->
+                    }
+                </div><!-- End of row -->
+
+         
+
+                <!-- Pagination -->
+                <div class="pagination mt-4">
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <a href="@Url.Action("Index", new { pageNumber = i, pageSize = ViewBag.PageSize, searchTerm = ViewBag.SearchTerm })"
+                           class="btn btn-outline-primary @(i == ViewBag.CurrentPage ? "active" : "")">
+                            @i
+                        </a>
+                    }
+                </div>
+
+          </div>
+
+
 
         </div><!-- Menu Container -->
 
-      </div>
+      
 
     </section><!-- /Menu Section -->
 

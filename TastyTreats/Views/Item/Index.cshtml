@@ -1,4 +1,4 @@
-﻿
+﻿@* 
 @{
     ViewBag.Title = "Items";
 }
@@ -53,3 +53,84 @@
         }
     </tbody>
 </table>
+ *@
+
+
+
+@{
+    ViewBag.Title = "Items";
+}
+
+<h2>Items</h2>
+
+<p>
+    @Html.ActionLink("Add New Item", "Add", "Item", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Picture</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Final Price</th>
+            <th>Description</th>
+            <th>Available</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ItemPicture))
+                    {
+                        <img src="@item.ItemPicture" alt="@item.Name" width="50" height="50" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+                </td>
+                <td>@item.Name</td>
+                <td>@item.Category.Name</td>
+                <td>@item.Price.ToString()</td>
+                <td>@item.Discount?.ToString()</td>
+                <td>@item.FinalPrice.ToString()</td>
+                <td>@item.Description</td>
+                <td>@(item.Availability ? "Yes" : "No")</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.ItemId }, new { @class = "btn btn-info" }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }, new { @class = "btn btn-warning" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ItemId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="pagination">
+    <ul class="pagination">
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <li class="page-item">
+                @Html.ActionLink("Previous", "Index", new { pageNumber = ViewBag.CurrentPage - 1, pageSize = 10 }, new { @class = "page-link" })
+            </li>
+        }
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                @Html.ActionLink(i.ToString(), "Index", new { pageNumber = i, pageSize = 2 }, new { @class = "page-link" })
+            </li>
+        }
+        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+            <li class="page-item">
+                @Html.ActionLink("Next", "Index", new { pageNumber = ViewBag.CurrentPage + 1, pageSize = 2 }, new { @class = "page-link" })
+            </li>
+        }
+    </ul>
+</div>

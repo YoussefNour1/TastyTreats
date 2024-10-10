@@ -19,7 +19,7 @@ namespace TastyTreats.Controllers
         {
             _orderRepository = orderRepository;
         }
-        public async  Task< IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder = "asc")
         {
             var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
@@ -30,21 +30,21 @@ namespace TastyTreats.Controllers
 
             IEnumerable<Order> orders;
 
-            // Check if the user has the role 'User'.
-            if (!User.IsInRole("User"))
+            if (User.IsInRole("User"))
             {
-                // If the user is a 'User', get orders by their User ID.
                 orders = await _orderRepository.GetOrdersByUserId(userId);
             }
             else
             {
-                // If the user has any other role (e.g., 'Admin'), get all orders.
-                orders =  _orderRepository.GetAll();
+                orders = _orderRepository.GetAll(sortOrder == "asc");
             }
 
+            ViewBag.SortOrder = sortOrder; // Store the sort order in ViewBag for use in the view
             return View(orders);
-
         }
+
+
+
         public IActionResult Create()
         {
             return View();

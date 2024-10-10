@@ -1,6 +1,6 @@
 ﻿@model Order
 
-<div class="container " style="margin-top: 145px ;margin-bottom: 145px ">
+<div class="container" style="margin-top: 145px; margin-bottom: 145px;">
     <h2 class="mb-3">Order Details</h2>
 
     <div class="card bg-dark text-white">
@@ -14,12 +14,15 @@
                 <dd class="col-sm-9">$@Model.TotalPrice</dd>
 
                 <dt class="col-sm-3">Order Date</dt>
-                <dd class="col-sm-9">@Model.CreatedAt.ToString("dd MMM yyyy")</dd>
-
-             
+                <dd class="col-sm-9">@Model.CreatedAt</dd>
 
                 <dt class="col-sm-3">Customer Name</dt>
-                <dd class="col-sm-9">@Model.User.Name</dd> 
+                <dd class="col-sm-9">@Model.User?.UserName </dd> 
+
+                
+
+                <dt class="col-sm-3">Address</dt>
+                <dd class="col-sm-9">@Model.User?.Address </dd>
             </dl>
         </div>
     </div>
@@ -29,7 +32,7 @@
     {
         <h4 class="mt-4">Order Items</h4>
 
-        <table class="table table-bordered table-dark table-hover ">
+        <table class="table table-bordered table-dark table-hover">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Item Name</th>
@@ -42,10 +45,10 @@
                 @foreach (var item in Model.OrderItems)
                 {
                     <tr>
-                        <td>@item.Item.Name</td> <!-- Assuming Item has a 'Name' property -->
+                        <td>@item?.Item?.Name </td> <!-- Handle potential nulls -->
                         <td>@item.Quantity</td>
-                        <td>$@item.Item.FinalPrice.ToString("F2")</td>
-                        <td>$@(item.Item.FinalPrice * item.Quantity)</td>
+                        <td>$@item.Item?.FinalPrice</td>
+                        <td>$@(item.Item?.FinalPrice * item.Quantity)</td>
                     </tr>
                 }
             </tbody>
@@ -58,3 +61,4 @@
 
     <a asp-action="Index" class="btn btn-primary mt-3">Back to Orders</a>
 </div>
+

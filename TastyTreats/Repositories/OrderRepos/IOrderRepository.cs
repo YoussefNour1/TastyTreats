@@ -14,7 +14,7 @@ namespace TastyTreats.Repositories.OrderRepos
         public Order GetById(int? id);
         public Order Details(int? id);
 
-        public IEnumerable<Order> GetAll();
+        public IEnumerable<Order> GetAll(bool IsAscending);
 
         public  Task  Save();
         public  Task<List<Order>> GetOrdersByUserId(int userId);

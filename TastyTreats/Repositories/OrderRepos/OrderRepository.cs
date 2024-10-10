@@ -71,10 +71,21 @@ namespace TastyTreats.Repositories.OrderRepos
                 FirstOrDefault(O => O.OrderId == id);
         }
 
-        public IEnumerable<Order> GetAll()
+        public IEnumerable<Order> GetAll(bool isAscending)
         {
-            return context.Orders.Include(o=>o.OrderItems).Include(u=>u.User).ToList();
+            var orders = context.Orders.Include(o => o.OrderItems).Include(u => u.User);
+
+            if (isAscending)
+            {
+                return orders.OrderBy(o => o.CreatedAt).ToList(); // Sort ascending by CreatedAt
+            }
+            else
+            {
+                return orders.OrderByDescending(o => o.CreatedAt).ToList(); // Sort descending by CreatedAt
+            }
         }
+
+
         public async Task Save()
         {
            await context.SaveChangesAsync();

@@ -13,17 +13,46 @@ namespace TastyTreats.Controllers
         {
             _itemRepository = itemRepository;
         }
-        
 
-        public IActionResult Index()
+
+        //public IActionResult Index()
+        //{
+        //    var items = _itemRepository.GetAll();
+        //    if (items == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(items);
+        //}
+
+
+        public IActionResult Index(int pageNumber = 1, int pageSize = 10, string searchTerm = "")
         {
-            var items = _itemRepository.GetAll();
-            if (items == null)
+            var items = _itemRepository.GetAll(pageNumber, pageSize, searchTerm); // Update to pass search term
+            if (items == null || !items.Any())
             {
                 return NotFound();
             }
+
+            // Total items for pagination logic
+            int totalItems = _itemRepository.CountItems(searchTerm); // Update to count based on search term
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.SearchTerm = searchTerm; // Pass search term to the view
+
             return View(items);
         }
+
+
+
+
+
+
+
+
+
+
+
         public IActionResult Details(int id)
         {
             var item = _itemRepository.GetById(id);
