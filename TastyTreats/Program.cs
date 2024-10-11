@@ -4,7 +4,6 @@ using TastyTreats.Contexts;
 using TastyTreats.Repositories;
 using TastyTreats.Repositories.OrderRepos;
 using TastyTreats.Repositories.UserRepos;
-using TastyTreats.Repositories;
 using TastyTreats.Models;
 using Microsoft.Extensions.Options;
 using System.Configuration;
