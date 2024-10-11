@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TastyTreats.Models;
 using TastyTreats.Repositories;
 
 namespace TastyTreats.Controllers
 {
+
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         ICategoryRepository _categoryRepository;
