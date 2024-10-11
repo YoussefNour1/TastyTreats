@@ -12,24 +12,19 @@
             <header class="header">Login</header>
             <form method="post" asp-action="Login">
 
-                <div asp-validation-summary="All" class="text-white"></div>
-
-                <div class="field input-field">
-                    <input asp-for="UserName" placeholder="UserName" class="input">
-                    <span asp-validation-for="UserName" class="text-white"></span>
-                </div>
-
+                <div asp-validation-summary="All" class="text-dark" style="color:red"></div>
+                <br />
                 <div class="field input-field">
                     <input asp-for="Email" placeholder="Email" class="input">
-                    <span asp-validation-for="Email" class="text-white"></span>
+                    <span style="color:red; margin:5px;" asp-validation-for="Email" class="text-dark"></span>
                 </div>
-
+                <br />
                 <div class="field input-field">
                     <input asp-for="Password" placeholder="Password" class="password">
-                    <span asp-validation-for="Password" class="text-white"></span>
+                    <span style="color:red; margin:5px;" asp-validation-for="Password" class="text-dark"></span>
                     <i class='bx bx-hide eye-icon'></i>
                 </div>
-
+                <br />
                 <div class="form-link">
                     <a asp-action="ForgotPassword" asp-controller="Account" class="forgot-pass">Forgot password?</a>
                 </div>
@@ -69,6 +64,7 @@
 
 @section Scripts {
     <style>
+
         .btn-google {
             background-color: #4285F4; /* Google's blue */
             color: white;

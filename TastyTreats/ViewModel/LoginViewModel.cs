@@ -4,8 +4,6 @@ namespace TastyTreats.ViewModel
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage ="UserName must be required")]
-        public string UserName { get; set; }
 
         [Required(ErrorMessage = "Email must be required")]
         [DataType(DataType.EmailAddress)]

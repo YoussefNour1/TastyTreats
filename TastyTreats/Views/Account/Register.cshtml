@@ -11,31 +11,31 @@
             <header class="text-light">Sign up</header>
             <form asp-action="Register" asp-controller="Account" method="post">
 
-                <div asp-validation-summary="All" class="text-danger"></div>
+                <div asp-validation-summary="All" style="color:red" class="text-danger"></div>
 
                 <div class="field input-field mb-3">
                     <input asp-for="UserName" placeholder="UserName" class="form-control bg-dark text-light" />
-                    <span asp-validation-for="UserName" class="text-white"></span>
+                    <span style="color:red" asp-validation-for="UserName" class="text-white"></span>
                 </div>
 
                 <div class="field input-field mb-3">
                     <input asp-for="Email" placeholder="Email" class="form-control bg-dark text-light" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <span style="color:red" asp-validation-for="Email" class="text-danger"></span>
                 </div>
 
                 <div class="field input-field mb-3">
                     <input asp-for="Address" placeholder="Address" class="form-control bg-dark text-light" />
-                    <span asp-validation-for="Address" class="text-danger"></span>
+                    <span style="color:red" asp-validation-for="Address" class="text-danger"></span>
                 </div>
 
                 <div class="field input-field mb-3">
                     <input asp-for="Password" type="password" placeholder="Create password" class="form-control bg-dark text-light" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <span style="color:red" asp-validation-for="Password" class="text-danger"></span>
                 </div>
 
                 <div class="field input-field mb-3">
                     <input asp-for="ConfirmPassword" type="password" placeholder="Confirm password" class="form-control bg-dark text-light" />
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <span style="color:red" asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
 
                 <div class="field button-field mb-3">
