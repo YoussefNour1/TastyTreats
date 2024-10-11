@@ -10,6 +10,7 @@ using System.Configuration;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using TastyTreats.Repositories.ItemRepos;
 
 
 
@@ -24,6 +25,7 @@ internal class Program
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
         builder.Services.AddDbContext<TastyTreatsContext>(options =>
             options.UseSqlServer(connectionString));
+    
 
         //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<TastyTreatsContext>();
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();

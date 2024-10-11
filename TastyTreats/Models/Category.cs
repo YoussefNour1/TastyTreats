@@ -15,7 +15,7 @@ namespace TastyTreats.Models
         public string? Description { get; set; }
 
         // Relationships
-        public ICollection<Item> Items { get; set; }
+        public ICollection<Item>? Items { get; set; }
     }
 
 }

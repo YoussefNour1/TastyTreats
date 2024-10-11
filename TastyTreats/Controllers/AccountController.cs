@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using System.Net;
 using System.Security.Claims;
@@ -59,7 +60,9 @@ namespace TastyTreats.Controllers
 
                 //Check if creating user Succeeded
                 if (result.Succeeded)
-                {   
+                {
+                    await _userManager.AddToRoleAsync(applicationUser, "User");
+
                     //Create Cookies if User created successfully
                     await _signInManager.SignInAsync(applicationUser, isPersistent: false);//session (Remember me for saving email and Password for login )
                     return RedirectToAction("Login", "Account"); //Action / Controller
@@ -104,7 +107,11 @@ namespace TastyTreats.Controllers
             if (ModelState.IsValid)
             {
                 //step2-- > Check if user exists using UserName or Email
-                var applicationUser = await _userManager.FindByEmailAsync(loginViewModel.Email);
+                //var applicationUser = await _userManager.FindByEmailAsync(loginViewModel.Email);
+                var applicationUser = await _userManager.Users
+                .Where(u => u.Email == loginViewModel.Email)
+                .FirstOrDefaultAsync();
+
                 if (applicationUser != null)
                 {
                     // step3--> Check if password not null
@@ -165,35 +172,55 @@ namespace TastyTreats.Controllers
                 return RedirectToAction(nameof(Login));
             }
 
-            // Check if the user already has a login
+            // Check if the user already has a login.
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
-                // If the user already has a login, redirect them to the homepage or return URL
+                // If the user already has a login, redirect them to the homepage or return URL.
                 return RedirectToLocal(returnUrl);
             }
             else
             {
-                // If the user doesn't have an account, create one
+                // If the user doesn't have an account, create one.
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
                 if (email != null)
                 {
                     var user = new ApplicationUser { UserName = email, Email = email };
 
-                    // Create a new user based on the external login information
+                    // Create a new user based on the external login information.
                     var createResult = await _userManager.CreateAsync(user);
                     if (createResult.Succeeded)
                     {
+                        // Assign the new user to a role, e.g., "User"
+                        var roleResult = await _userManager.AddToRoleAsync(user, "User");
+                        if (!roleResult.Succeeded)
+                        {
+                            // If role assignment fails, add errors to the ModelState and show the login page.
+                            foreach (var error in roleResult.Errors)
+                            {
+                                ModelState.AddModelError("", error.Description);
+                            }
+                            return View(nameof(Login));
+                        }
+
+                        // Add the external login info for the newly created user.
                         await _userManager.AddLoginAsync(user, info);
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToLocal(returnUrl);
                     }
+
+                    // If account creation fails, add errors to the ModelState.
+                    foreach (var error in createResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
                 }
 
-                // If account creation fails, return to the login page
+                // If the email is null or account creation fails, return to the login page.
                 return View(nameof(Login));
             }
         }
+
 
 
         //This method is used to safely redirect the user back to the returnUrl or to the home page if no return URL is provided.

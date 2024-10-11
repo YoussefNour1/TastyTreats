@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using TastyTreats.Models;
 using TastyTreats.Repositories.OrderRepos;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+
+
 
 namespace TastyTreats.Controllers
 {
@@ -15,11 +19,32 @@ namespace TastyTreats.Controllers
         {
             _orderRepository = orderRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string sortOrder = "asc")
         {
-           var ords= _orderRepository.GetAll();
-            return View(ords);
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userIdClaim == null || !int.TryParse(userIdClaim, out int userId))
+            {
+                return BadRequest("User ID is missing or invalid.");
+            }
+
+            IEnumerable<Order> orders;
+
+            if (User.IsInRole("User"))
+            {
+                orders = await _orderRepository.GetOrdersByUserId(userId);
+            }
+            else
+            {
+                orders = _orderRepository.GetAll(sortOrder == "asc");
+            }
+
+            ViewBag.SortOrder = sortOrder; // Store the sort order in ViewBag for use in the view
+            return View(orders);
         }
+
+
+
         public IActionResult Create()
         {
             return View();

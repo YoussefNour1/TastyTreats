@@ -60,7 +60,7 @@ namespace TastyTreats.Controllers
                 oldCatg.Name = newCatg.Name;
                 oldCatg.Description = newCatg.Description;
 
-                _categoryRepository.Update(newCatg);
+                _categoryRepository.Update(oldCatg);
                 _categoryRepository.Save();
                 return RedirectToAction("Index");
             }

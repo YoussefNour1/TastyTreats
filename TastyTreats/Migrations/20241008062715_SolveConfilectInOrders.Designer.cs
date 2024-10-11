@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyTreats.Contexts;
 
@@ -11,9 +12,11 @@ using TastyTreats.Contexts;
 namespace TastyTreats.Migrations
 {
     [DbContext(typeof(TastyTreatsContext))]
-    partial class TastyTreatsContextModelSnapshot : ModelSnapshot
+    [Migration("20241008062715_SolveConfilectInOrders")]
+    partial class SolveConfilectInOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,7 +261,7 @@ namespace TastyTreats.Migrations
                         .IsUnique()
                         .HasFilter("[UserId1] IS NOT NULL");
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
 
                     b.HasData(
                         new
@@ -296,7 +299,7 @@ namespace TastyTreats.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
 
                     b.HasData(
                         new
@@ -334,7 +337,7 @@ namespace TastyTreats.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -387,7 +390,7 @@ namespace TastyTreats.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Items", (string)null);
+                    b.ToTable("Items");
 
                     b.HasData(
                         new
@@ -446,7 +449,7 @@ namespace TastyTreats.Migrations
 
                     b.HasIndex("UserId1");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("TastyTreats.Models.OrderItem", b =>
@@ -475,40 +478,7 @@ namespace TastyTreats.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems", (string)null);
-                });
-
-            modelBuilder.Entity("TastyTreats.Models.Role", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "c0ecfb33-a55b-41c3-ab98-7e10cfabf31b",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "e4b17116-a4cc-49fe-acdd-913adeba011a",
-                            Name = "user",
-                            NormalizedName = "USER"
-                        });
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("TastyTreats.Models.User", b =>
@@ -559,7 +529,7 @@ namespace TastyTreats.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("TastyTreats.ViewModel.AddRoleViewModel", b =>
@@ -568,7 +538,7 @@ namespace TastyTreats.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("AddRoleViewModel", (string)null);
+                    b.ToTable("AddRoleViewModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

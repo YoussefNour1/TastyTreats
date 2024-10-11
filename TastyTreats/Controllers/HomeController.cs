@@ -1,22 +1,54 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Drawing.Printing;
 using TastyTreats.Models;
+using TastyTreats.Repositories;
+using TastyTreats.Repositories.ItemRepos;
+using TastyTreats.ViewModel;
 
 namespace TastyTreats.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IItemRepository _itemRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        public HomeController(ILogger<HomeController> logger, IItemRepository itemRepository, ICategoryRepository categoryRepository )
         {
             _logger = logger;
+            _itemRepository = itemRepository;
+            _categoryRepository = categoryRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber = 1, int pageSize = 2, string searchTerm = "All")
         {
-            return View();
+            var items = _itemRepository.GetAll(pageNumber, pageSize, searchTerm); // Get items
+            var categories = _categoryRepository.GetAll(); // Get categories
+
+            if (items == null || !items.Any())
+            {
+                return NotFound();
+            }
+
+            // Total items for pagination logic
+            int totalItems = _itemRepository.CountItems(searchTerm); // Count based on search term
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.SearchTerm = searchTerm; // Pass search term to the view
+
+            // Create a ViewModel instance
+            var viewModel = new ItemCategoryViewModel
+            {
+                Items = items,
+                Categories = categories
+            };
+
+            return View(viewModel); // Pass the ViewModel to the view
         }
+
+
+
+
 
         public IActionResult Privacy()
         {

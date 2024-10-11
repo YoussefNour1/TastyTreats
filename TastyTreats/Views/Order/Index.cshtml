@@ -2,23 +2,28 @@
 <table class="table table-hover table-dark container" style="margin-top: 145px ;margin-bottom: 145px ">
     <thead>
         <tr>
-
-            <th scope="col"> name</th>
-            <th scope="col">Adress</th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
             <th scope="col">Phone</th>
-            <th scope="col">total price</th>
-            <th scope="col">OrderDate</th>
+            <th scope="col">Total Price</th>
+            <th scope="col">
+                <a asp-action="Index" asp-route-sortOrder="@(ViewBag.SortOrder == "asc" ? "desc" : "asc")">
+                    Order Date @(ViewBag.SortOrder == "asc" ? "↑" : "↓")
+                </a>
+
+            </th>
             <th scope="col">Order Status</th>
             <th scope="col">Action</th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var ord in Model)
         {
             <tr>
                
-                <td>@ord.User.Name </td>
-                <td>@ord.User.City </td>
+                <td>@ord.User.UserName </td>
+                <td>@ord.User.Address </td>
                 <td>@ord.User.Phone</td>
                 <td>@ord.TotalPrice</td>    
                 <td>@ord.CreatedAt</td>    
@@ -31,3 +36,7 @@
         }
     </tbody>
 </table>
+
+
+
+

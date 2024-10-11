@@ -1,10 +1,11 @@
-﻿using TastyTreats.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TastyTreats.Models;
 
 namespace TastyTreats.Repositories.OrderRepos
 {
     public interface IOrderRepository
     {
-        public  Task<Order>  Add(int UserId);
+        public Task<Order> Add(int UserId);
 
         public void Update(Order order);
 
@@ -13,9 +14,11 @@ namespace TastyTreats.Repositories.OrderRepos
         public Order GetById(int? id);
         public Order Details(int? id);
 
-        public List<Order> GetAll();
+        public IEnumerable<Order> GetAll(bool IsAscending);
 
         public  Task  Save();
+        public  Task<List<Order>> GetOrdersByUserId(int userId);
+
 
     }
 }

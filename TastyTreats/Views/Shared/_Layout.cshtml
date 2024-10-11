@@ -66,29 +66,37 @@
                     <ul>
                         <li><a asp-controller="Home" asp-action="Index" class="active">Home<br></a></li>
                         <li><a href="#about">About</a></li>
-                        <li><a asp-controller="Menu" asp-action="Index">Menu</a></li>
-                        <li><a asp-controller="order" asp-action="index">Orders</a></li>
+                        <li><a href="#menu">Menu</a></li>
                         <li><a href="#events">Events</a></li>
                         <li><a href="#chefs">Chefs</a></li>
                         <li><a href="#contact">Contact</a></li>
 
                         <!-- Cart Icon  Should be replace UserId with the logged-in user's ID from the User.Identity-->
-                        <li>
-                            <a asp-controller="Cart" asp-action="Details" asp-route-userId="@User.FindFirstValue(ClaimTypes.NameIdentifier)" class="nav-icon">
-                                <i class="bi bi-cart"></i> Cart
-                            </a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                        <li><a asp-controller="order" asp-action="index">Orders</a></li>
+                            <li>
+                                <a asp-controller="Cart" asp-action="Details" asp-route-userId="@User.FindFirstValue(ClaimTypes.NameIdentifier)" class="nav-icon">
+                                    <i class="bi bi-cart"></i> Cart
+                                </a>
+                            </li>
 
+                            
+                        }
 
-
-                        <li class="dropdown">
-                            <a href="#"><span>Admin</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                            <ul>
-                                <li><a asp-controller="UserManagement" asp-action="Index">User Management</a></li>
-                                <li><a asp-controller="MenuManagement">Menu Management</a></li>
-                                <li><a asp-controller="OrderManagement">Order Management</a></li>
-                            </ul>
-                        </li>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li class="dropdown">
+                                <a href="#"><span>Admin</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                                <ul>
+                                    <li><a asp-controller="UserManagement" asp-action="Index">User Management</a></li>
+                                    <li><a asp-controller="MenuManagement">Menu Management</a></li>
+                                    <li><a asp-controller="OrderManagement">Order Management</a></li>
+                                    <li><a asp-controller="Role" asp-action="AddRole">Role Management</a></li>
+                                </ul>
+                            </li>
+                            
+                        }
                         @* <li class="dropdown">
                         <a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
