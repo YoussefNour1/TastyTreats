@@ -3,13 +3,13 @@
     ViewBag.Title = "Items";
 }
 
-<h2>Items</h2>
+<h1 class="text-center" style="color:#CDA45E">Items</h1>
 
 <p>
-    @Html.ActionLink("Add New Item", "Add", "Item", null, new { @class = "btn btn-primary" })
+    <a asp-action="Add" asp-controller="Item" class="btn" style="color:#CDA45E; float:left;">Add new Item</a>
 </p>
 
-<table class="table">
+<table class="table table-hover table-dark mt-3" style="margin-top: 200px ;margin-bottom: 200px ">
     <thead>
         <tr>
             <th>Picture</th>
@@ -45,7 +45,6 @@
                 <td>@item.Description</td>
                 <td>@(item.Availability ? "Yes" : "No")</td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.ItemId }, new { @class = "btn btn-info" }) |
                     @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }, new { @class = "btn btn-warning" }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.ItemId }, new { @class = "btn btn-danger" })
                 </td>

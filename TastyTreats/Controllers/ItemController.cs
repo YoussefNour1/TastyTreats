@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TastyTreats.Models;
 using TastyTreats.Repositories.ItemRepos;
 
 namespace TastyTreats.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class ItemController : Controller
     {
         //injection
@@ -42,16 +44,6 @@ namespace TastyTreats.Controllers
 
             return View(items);
         }
-
-
-
-
-
-
-
-
-
-
 
         public IActionResult Details(int id)
         {
