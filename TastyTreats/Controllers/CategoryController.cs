@@ -6,7 +6,7 @@ using TastyTreats.Repositories;
 namespace TastyTreats.Controllers
 {
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
     public class CategoryController : Controller
     {
         ICategoryRepository _categoryRepository;

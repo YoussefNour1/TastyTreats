@@ -30,7 +30,7 @@ namespace TastyTreats.Controllers
 
             IEnumerable<Order> orders;
 
-            if (User.IsInRole("User"))
+            if (User.IsInRole("user"))
             {
                 orders = await _orderRepository.GetOrdersByUserId(userId);
             }

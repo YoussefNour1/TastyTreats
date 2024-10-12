@@ -105,12 +105,8 @@ else
     <p><strong>Total Cost:</strong> @Model.CartItems.Sum(i => i.Item.FinalPrice * i.Quantity).ToString("C")</p>
 
     <!-- Confirm Order button styled as a 'Subscribe' button -->
-    <form asp-action="Create" asp-controller="Order" method="post">
-        <input type="hidden" name="UserId" value="@Model.UserId" />
-        <button type="submit" class="btn btn-primary btn-lg" style="background-color: #28a745; border-color: #28a745;">
-            <i class="fas fa-check-circle"></i> Confirm Order
-        </button>
-    </form>
+    <a asp-controller="Checkout" asp-action="index" class="btn btn-primary">Proceed to Checkout</a>
+
 }
 
 <script>

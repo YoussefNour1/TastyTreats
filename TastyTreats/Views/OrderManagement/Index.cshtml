@@ -1,0 +1,50 @@
+﻿@model IEnumerable<TastyTreats.Models.Order>
+
+<table class="table table-hover table-dark container" style="margin-top: 145px ;margin-bottom: 145px ">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Total Price</th>
+            <th scope="col">
+                <a asp-action="Index" asp-route-sortOrder="@(ViewBag.SortOrder == "asc" ? "desc" : "asc")">
+                    Order Date @(ViewBag.SortOrder == "asc" ? "↑" : "↓")
+                </a>
+            </th>
+            <th scope="col">Order Status</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var ord in Model)
+        {
+            <tr>
+                <td>@ord.User.UserName</td>
+                <td>@ord.User.Address</td>
+                <td>@ord.User.Phone</td>
+                <td>@ord.TotalPrice</td>
+                <td>@ord.CreatedAt</td>
+                <td>
+                    <!-- Form for updating the status -->
+                    <form asp-controller="OrderManagement" asp-action="UpdateStatus" method="post" class="d-inline">
+                        <input type="hidden" name="orderId" value="@ord.OrderId" />
+                        <select name="orderStatus" class="form-select" onchange="this.form.submit()">
+                            <option value="Pending" selected="@(ord.OrderStatus == "Pending" ? "selected" : null)">Pending</option>
+                            <option value="Processing" selected="@(ord.OrderStatus == "Processing" ? "selected" : null)">Processing</option>
+                            <option value="Shipped" selected="@(ord.OrderStatus == "Shipped" ? "selected" : null)">Shipped</option>
+                            <option value="Delivered" selected="@(ord.OrderStatus == "Delivered" ? "selected" : null)">Delivered</option>
+                            <option value="Cancelled" selected="@(ord.OrderStatus == "Cancelled" ? "selected" : null)">Cancelled</option>
+                        </select>
+                    </form>
+
+
+                </td>
+                <td>
+                    <a asp-controller="Order" asp-action="Details" asp-route-Id="@ord.OrderId" class="btn btn-secondary"><i class="bi bi-eye-fill"></i> Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
