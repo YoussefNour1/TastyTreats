@@ -9,11 +9,8 @@ namespace TastyTreats.Models
         [Key]
         public int CartId { get; set; }
 
-      
-
         // Corrected Relationship: A Cart belongs to one User
-
-        [Required]     //check that the user is associated with the cart
+        [Required]    
         public int UserId { get; set; }
         public ApplicationUser User { get; set; }
 

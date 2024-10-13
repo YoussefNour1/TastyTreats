@@ -12,8 +12,8 @@ using TastyTreats.Contexts;
 namespace TastyTreats.Migrations
 {
     [DbContext(typeof(TastyTreatsContext))]
-    [Migration("20241013072052_UpdatePhoneNumber")]
-    partial class UpdatePhoneNumber
+    [Migration("20241013172901_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -183,7 +183,6 @@ namespace TastyTreats.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -229,15 +228,9 @@ namespace TastyTreats.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId2")
-                        .HasColumnType("int");
-
                     b.HasKey("CartId");
 
                     b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.HasIndex("UserId2")
                         .IsUnique();
 
                     b.ToTable("Carts");
@@ -391,14 +384,9 @@ namespace TastyTreats.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("int");
-
                     b.HasKey("OrderId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Orders");
                 });
@@ -476,57 +464,6 @@ namespace TastyTreats.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TastyTreats.Models.User", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Phone")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserPicture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ZipCode")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("User");
-                });
-
             modelBuilder.Entity("TastyTreats.ViewModel.AddRoleViewModel", b =>
                 {
                     b.Property<string>("Name")
@@ -595,12 +532,6 @@ namespace TastyTreats.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TastyTreats.Models.User", null)
-                        .WithOne("Cart")
-                        .HasForeignKey("TastyTreats.Models.Cart", "UserId2")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("User");
                 });
 
@@ -641,10 +572,6 @@ namespace TastyTreats.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("TastyTreats.Models.User", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });
@@ -695,13 +622,6 @@ namespace TastyTreats.Migrations
             modelBuilder.Entity("TastyTreats.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("TastyTreats.Models.User", b =>
-                {
-                    b.Navigation("Cart");
-
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

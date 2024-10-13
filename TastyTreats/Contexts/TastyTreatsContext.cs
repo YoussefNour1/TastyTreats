@@ -28,11 +28,7 @@ namespace TastyTreats.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<User>()
-                .Property(u => u.Role)
-                .HasConversion<string>();
-
+ 
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Orders)
                 .WithOne(o => o.User)
