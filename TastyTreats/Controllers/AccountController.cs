@@ -30,13 +30,13 @@ namespace TastyTreats.Controllers
             _emailSenderRepository = emailSenderRepository;
         }
 
-       
+
         [HttpGet]
         //[AllowAnonymous]
         public IActionResult Register() => View();
 
 
-       
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel RegisterModel)
@@ -51,7 +51,7 @@ namespace TastyTreats.Controllers
                     UserName = RegisterModel.UserName,
                     Email = RegisterModel.Email,
                     Address = RegisterModel.Address,
-                    
+
                 };
 
                 //creating user email and save its data in database 
@@ -69,7 +69,7 @@ namespace TastyTreats.Controllers
                 }
 
                 //For displaying Errors in Summary
-                else 
+                else
                 {
                     foreach (var item in result.Errors)
                     {
@@ -84,7 +84,7 @@ namespace TastyTreats.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-         
+
             return View();
         }
 
@@ -136,7 +136,7 @@ namespace TastyTreats.Controllers
         {
             //Delete cookies for User to made him Login once again
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         //======================================================================================================================

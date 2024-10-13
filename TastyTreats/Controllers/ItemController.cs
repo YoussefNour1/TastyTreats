@@ -6,7 +6,7 @@ using TastyTreats.Repositories.ItemRepos;
 
 namespace TastyTreats.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize  ]
     public class ItemController : Controller
     {
         //injection
