@@ -7,9 +7,9 @@ using TastyTreats.ViewModel;
 
 namespace TastyTreats.Contexts
 {
-    public class TastyTreatsContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
+    public class TastyTreatsContext : IdentityDbContext<ApplicationUser, Role, int>
     {
-        public DbSet<User> Users { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -74,9 +74,9 @@ namespace TastyTreats.Contexts
             modelBuilder.Entity<Category>().HasData(DummyCategoryContext.GetCategories().ToArray());
             modelBuilder.Entity<Role>().HasData(DummyRolesContext.GetRoles().ToArray());
             modelBuilder.Entity<Item>().HasData(DummyItemContext.GetItems().ToArray());
-            modelBuilder.Entity<Cart>().HasData(DummyCartContext.GetCarts().ToArray());
+            //modelBuilder.Entity<Cart>().HasData(DummyCartContext.GetCarts().ToArray());
 
-            modelBuilder.Entity<CartItem>().HasData(DummyCartItemContext.GetCartItems().ToArray());
+            //modelBuilder.Entity<CartItem>().HasData(DummyCartItemContext.GetCartItems().ToArray());
             //modelBuilder.Entity<Order>().HasData(DummyOrderContext.GetOrders().ToArray());
             //modelBuilder.Entity<OrderItem>().HasData(DummyOrderItemContext.GetOrderItems().ToArray());
         }

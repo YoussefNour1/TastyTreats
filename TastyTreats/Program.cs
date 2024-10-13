@@ -48,7 +48,7 @@ internal class Program
         builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
         builder.Services.AddTransient<ICartRepository, CartRepository>();
         builder.Services.AddTransient<IOrderRepository, OrderRepository>();
-        builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>().AddEntityFrameworkStores<TastyTreatsContext>().AddDefaultTokenProviders();
+        builder.Services.AddIdentity<ApplicationUser, Role>().AddEntityFrameworkStores<TastyTreatsContext>().AddDefaultTokenProviders();
 
         //Register the Email Service
         builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));

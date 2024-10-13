@@ -28,7 +28,7 @@ namespace TastyTreats.Controllers
 
         // POST: Update User Info and Confirm Order
         [HttpPost]
-        public async Task<IActionResult> ConfirmOrderAndUpdateUser(string address, int? phone)
+        public async Task<IActionResult> ConfirmOrderAndUpdateUser(string address, string phone)
         {
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
             var user = await _userManager.FindByIdAsync(userId);
@@ -37,7 +37,7 @@ namespace TastyTreats.Controllers
             if (user != null)
             {
                 user.Address = address;
-                user.Phone = (int)phone;
+                user.Phone = phone;
                 var updateResult = await _userManager.UpdateAsync(user);
 
                 if (!updateResult.Succeeded)

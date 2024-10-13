@@ -1,4 +1,4 @@
-﻿@model TastyTreats.Models.User
+﻿@model TastyTreats.Models.ApplicationUser
 
 @{
     ViewData["Title"] = "Create User";
@@ -9,13 +9,11 @@
     background-repeat: no-repeat;
     background-position: center;
 ">
-
-    
     <div class="row" style="margin-top:87px; padding:30px;">
-        <center class="container" style="">
-            <div class="col-md-4" style="text-align:start; 
-                                        border:solid #cda45e 1px; 
-                                        padding:10px; 
+        <center class="container">
+            <div class="col-md-4" style="text-align:start;
+                                        border:solid #cda45e 1px;
+                                        padding:10px;
                                         background-color:#212020eb;
                                         max-width: 500px;
                                         width: 100%;
@@ -25,46 +23,64 @@
                 <h5>New User</h5>
                 <form asp-action="Create" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                     <div class="form-group p-1 m-1">
                         <label asp-for="Name" class="control-label"></label>
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
-                    <div class="form-group p-1">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
+                    <div class="form-group p-1 m-1">
+                        <label asp-for="UserName" class="control-label"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
                     </div>
+
                     <div class="form-group m-1">
                         <label asp-for="Email" class="control-label"></label>
                         <input asp-for="Email" class="form-control" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
+
+                    <div class="form-group m-1">
+                        <label name="PasswordLabel" class="control-label">Password</label>
+                        <input name="Password" type="password" class="form-control" />
+                        <span  class="text-danger"></span>
+                    </div>
+
                     <div class="form-group m-1">
                         <label asp-for="UserPicture" class="control-label"></label>
                         <input type="file" accept="image/*" id="UserPicture" name="UserPicture" asp-for="UserPicture" class="form-control" />
                         <span asp-validation-for="UserPicture" class="text-danger"></span>
                     </div>
+
                     <div class="form-group m-1">
-                        <label asp-for="ZipCode" class="control-label"></label>
-                        <input asp-for="ZipCode" class="form-control" />
-                        <span asp-validation-for="ZipCode" class="text-danger"></span>
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
                     </div>
-                    <div class="form-group m-1">
-                        <label asp-for="Country" class="control-label"></label>
-                        <input asp-for="Country" class="form-control" />
-                        <span asp-validation-for="Country" class="text-danger"></span>
-                    </div>
+
                     <div class="form-group m-1">
                         <label asp-for="City" class="control-label"></label>
                         <input asp-for="City" class="form-control" />
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                     <div class="form-group m-1">
-                        <label asp-for="Role" class="control-label"></label>
-                        <select asp-for="Role" asp-items="@ViewBag.Roles" class="form-control"></select>
-                        <span asp-validation-for="Role" class="text-danger"></span>
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
                     </div>
+
+                    <div class="form-group m-1">
+                        <label for="RoleSelection" class="control-label">Role</label>
+                        <select id="RoleSelection" name="SelectedRole" class="form-control">
+                            <option value="">--Select a Role--</option>
+                            @foreach (var role in ViewBag.Roles as List<SelectListItem>)
+                            {
+                                <option value="@role.Value">@role.Text</option>
+                            }
+                        </select>
+                    </div>
+
                     <div class="form-group mt-4">
                         <input type="submit" value="Create" class="btn btn-warning" />
                     </div>
@@ -76,5 +92,4 @@
     <div>
         <a asp-action="Index">Back to List</a>
     </div>
-
 </section>

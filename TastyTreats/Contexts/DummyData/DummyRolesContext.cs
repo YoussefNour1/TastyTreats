@@ -12,13 +12,13 @@ namespace TastyTreats.Contexts.DummyData
             {
                 new Role
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = 1,
                     Name = "admin",
                     NormalizedName = "ADMIN"
                 },
                 new Role
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = 2,
                     Name = "user",
                     NormalizedName = "USER"
                 }

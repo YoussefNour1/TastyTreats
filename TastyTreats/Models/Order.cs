@@ -20,7 +20,7 @@ namespace TastyTreats.Models
         public DateTime? UpdatedAt { get; set; }
 
         // Foreign Key
-        [ForeignKey("User")]
+        [ForeignKey("ApplicationUser")]
         public int UserId { get; set; }
 
         // Navigation Property

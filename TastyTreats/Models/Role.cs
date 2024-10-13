@@ -2,7 +2,7 @@
 
 namespace TastyTreats.Models
 {
-    public class Role: IdentityRole
+    public class Role: IdentityRole<int>
     {
     }
 }

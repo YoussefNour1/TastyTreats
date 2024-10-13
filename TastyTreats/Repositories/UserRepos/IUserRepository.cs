@@ -5,10 +5,10 @@ namespace TastyTreats.Repositories.UserRepos
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<User>> GetAllUsersAsync();
-        Task<User> GetUserByIdAsync(int userId);
-        Task<User> AddUserAsync(User user);
-        Task UpdateUserAsync(User user);
+        Task<IEnumerable<ApplicationUser>> GetAllUsersAsync();
+        Task<ApplicationUser> GetUserByIdAsync(int userId);
+        Task<ApplicationUser> AddUserAsync(ApplicationUser user);
+        Task UpdateUserAsync(ApplicationUser user);
         Task DeleteUserAsync(int userId);
     }
 }

@@ -1,12 +1,10 @@
-﻿@model IEnumerable<TastyTreats.Models.User>
+﻿@model IEnumerable<TastyTreats.ViewModel.UserWithRolesViewModel>
 
 @{
     ViewData["Title"] = "View";
 }
 
-
 <section style="margin-top:77px; padding:30px;">
-
 
     <h1>View All Users</h1>
 
@@ -14,32 +12,18 @@
         <a asp-action="Create" class="btn btn-outline-warning">Add New User</a>
     </p>
 
-    @if (Model.Count() > 0)
+    @if (Model.Any())
     {
         <table class="table table-dark" style="padding:10px; text-align:center;">
             <thead>
                 <tr>
-                    <th>
-                        Full Name
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Email)
-                    </th>
-                    <th>
-                        Picture
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ZipCode)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Country)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.City)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Role)
-                    </th>
+                    <th>Full Name</th>
+                    <th>@Html.DisplayNameFor(model => model.First().User.Email)</th>
+                    <th>Picture</th>
+                    <th>@Html.DisplayNameFor(model => model.First().User.Address)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().User.Phone)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().User.City)</th>
+                    <th>Role</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -47,44 +31,34 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <td>@Html.DisplayFor(modelItem => item.User.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.User.Email)</td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Name)
+                            <img src="@item.User.UserPicture" alt="@item.User.Name picture" width="100px" height="100px" class="img-thumbnail" />
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.User.Address)</td>
+                        <td>@Html.DisplayFor(modelItem => item.User.Phone)</td>
+                        <td>@Html.DisplayFor(modelItem => item.User.City)</td>
+                        <td>
+                            @foreach (var role in item.Roles)
+                            {
+                                <span class="badge bg-warning text-dark">@role</span>
+                            }
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            <img src="@item.UserPicture" alt="@item.Name picture" width="100px" height="100px" class="img-thumbnail" />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ZipCode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Country)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.City)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Role)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@item.User.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.User.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.User.Id">Delete</a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-
     }
     else
     {
         <center>
-            <h3>
-                There are no users here add some
-            </h3>
+            <h3>There are no users here, add some.</h3>
         </center>
     }
 </section>
