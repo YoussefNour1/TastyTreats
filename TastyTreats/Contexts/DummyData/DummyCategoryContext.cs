@@ -19,6 +19,36 @@ namespace TastyTreats.Contexts.DummyData
                     CategoryId = 2,
                     Name = "Snacks",
                     Description = "Tasty snacks and munchies."
+                },
+                new Category
+                {
+                    CategoryId = 3,
+                    Name = "Deserts",
+                    Description = "Various types of Deserts."
+                },
+                new Category
+                {
+                    CategoryId = 4,
+                    Name = "Soup",
+                    Description = "Soup is a liquid-based dish, often savory."
+                },
+                new Category
+                {
+                    CategoryId = 5,
+                    Name = "Bread",
+                    Description = "A staple food made from dough, typically baked."
+                },
+                new Category
+                {
+                    CategoryId = 6,
+                    Name = "Salad",
+                    Description = "A dish made primarily from raw or cooked vegetables."
+                },
+                new Category
+                {
+                    CategoryId = 7,
+                    Name = "Sandwich",
+                    Description = "A versatile dish consisting of bread with fillings."
                 }
             };
         }
