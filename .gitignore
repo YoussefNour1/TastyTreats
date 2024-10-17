@@ -364,4 +364,4 @@ FodyWeavers.xsd
 
 # Ignore appsettings.json
 appsettings.json
-appsettings.Development.json
+TastyTreats/appsettings.json

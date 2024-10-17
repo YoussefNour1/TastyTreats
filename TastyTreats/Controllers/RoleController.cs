@@ -10,8 +10,8 @@ namespace TastyTreats.Controllers
     [Authorize(Roles = "admin")]
     public class RoleController : Controller
     {
-        private readonly RoleManager<IdentityRole<int>> _roleManager;
-        public RoleController(RoleManager<IdentityRole<int>> roleManeger)
+        private readonly RoleManager<Role> _roleManager;
+        public RoleController(RoleManager<Role> roleManeger)
         {
             _roleManager = roleManeger;
         }
@@ -23,7 +23,7 @@ namespace TastyTreats.Controllers
         {
             if (ModelState.IsValid)
             {
-                IdentityRole<int> identityRole = new IdentityRole<int>()
+                Role identityRole = new Role()
                 {
                     Name = model.Name,
                 };
