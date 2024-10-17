@@ -12,7 +12,7 @@ namespace TastyTreats.Contexts.DummyData
                 {
                     ItemId = 1,
                     Name = "Coke",
-                    ItemPicture = "coke.png",
+                    ItemPicture = "/img/coke.png",
                     Price = 1.99m,
                     Discount = 0.50m,
                     Description = "Refreshing cola drink.",
@@ -23,7 +23,7 @@ namespace TastyTreats.Contexts.DummyData
                 {
                     ItemId = 2,
                     Name = "Chips",
-                    ItemPicture = "chips.png",
+                    ItemPicture = "/img/chips.png",
                     Price = 2.49m,
                     Discount = null,
                     Description = "Crunchy potato chips.",
