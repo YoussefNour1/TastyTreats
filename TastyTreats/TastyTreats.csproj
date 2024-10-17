@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Contexts\DummyData\DummyItemContext.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="appsettings.json.Example" />
   </ItemGroup>
 
@@ -38,6 +42,10 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\img\users\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Contexts\DummyData\DummyItemContext.cs" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
