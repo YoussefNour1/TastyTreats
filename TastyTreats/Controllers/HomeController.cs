@@ -20,7 +20,7 @@ namespace TastyTreats.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public IActionResult Index(int pageNumber = 1, int pageSize = 2, string searchTerm = "All")
+        public IActionResult Index(int pageNumber = 1, int pageSize = 4, string searchTerm = "All")
         {
             var items = _itemRepository.GetAll(pageNumber, pageSize, searchTerm); // Get items
             var categories = _categoryRepository.GetAll(); // Get categories
